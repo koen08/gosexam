@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">gosexam</string>
+
+    <string name="menu_filter">Главная</string>
+    <string name="menu_examList">Список вопросов</string>
+    <string name="menu_profile">Профиль</string>
+
+    <string name="infoDialog_close">Закрыть</string>
+
+    <string name="main_infoDialogTypeExamTitle">Формат тестирования</string>
+    <string name="main_infoDialogTypeExamContent">В режиме тренировка вы будете видеть ответы сразу.\nЭто поможет вам ознакомиться с тестом. Экзамен проверит ваши знания. Показ ответов будет отключен на время тестирования.</string>
+</resources>

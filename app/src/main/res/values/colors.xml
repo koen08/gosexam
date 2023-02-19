@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary_100">#061D37</color>
+    <color name="primary_80">#002855</color>
+    <color name="primary_70">#00336D</color>
+    <color name="primary_60">#0F4686</color>
+    <color name="primary_50">#386393</color>
+    <color name="primary_30">#B2C7E0</color>
+    <color name="primary_20">#CDDEF3</color>
+    <color name="primary_10">#EAF3FF</color>
+    <color name="primary_5">#F1F7FF</color>
+
+    <color name="secondary_100">#8C1327</color>
+    <color name="secondary_80">#C8102E</color>
+    <color name="secondary_10">#FDE7EB</color>
+
+    <color name="gray_100">#1C1C1C</color>
+    <color name="gray_90">#353535</color>
+    <color name="gray_80">#404040</color>
+    <color name="gray_70">#6F6F6F</color>
+    <color name="gray_a65">#800E121B</color>
+    <color name="gray_60">#8F8F8F</color>
+    <color name="gray_50">#BBBBBB</color>
+    <color name="gray_30">#E1E1E1</color>
+    <color name="gray_20">#EBEBEB</color>
+
+    <color name="black_100">#000000</color>
+    <color name="black_50">#80000000</color>
+    <color name="black_10">#1A000000</color>
+
+    <color name="white_100">#FFFFFF</color>
+    <color name="white_a90">#E6FFFFFF</color>
+    <color name="white_a70">#B3FFFFFF</color>
+    <color name="white_a50">#80FFFFFF</color>
+    <color name="white_a10">#1AFFFFFF</color>
+
+    <color name="yellow_100">#CA9400</color>
+    <color name="yellow_80">#FFC72C</color>
+
+    <color name="gray_blue_80">#667E99</color>
+    <color name="gray_blue_60">#8598AD</color>
+    <color name="gray_blue_50">#B3BFCC</color>
+    <color name="gray_blue_30">#E0E7EB</color>
+    <color name="gray_blue_20">#F0F3F5</color>
+
+    <color name="light_blue_90">#40BCFB</color>
+    <color name="light_blue_80">#71C5E8</color>
+
+    <color name="error_50">#F04F4F</color>
+    <color name="warning_50">#FF8A20</color>
+    <color name="error_20">#FFC0C0</color>
+    <color name="warning_10">#FEF0E1</color>
+    <color name="success_50">#4BB34B</color>
+    <color name="success_10">#EFFFEF</color>
+
+    <color name="loaderBackground">#66FFFFFF</color>
+
+    <color name="transparent">#00FFFFFF</color>
+
+    <color name="systemColors_scLIndigo">#5856D6</color>
+    <color name="m3SysLightPrimary">#6750A4</color>
+
+    <color name="tint_black_40">#66000000</color>
+
+    <color name="blue_80">#2787F5</color>
+    <color name="nameplate_green">#D0DF00</color>
+</resources>

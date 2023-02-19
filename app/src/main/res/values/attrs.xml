@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="SelectionButton">
+        <attr name="android:text" format="string" />
+        <attr name="check" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="SelectionButtonMini">
+        <attr name="android:text" format="string" />
+        <attr name="checkBtn" format="boolean" />
+    </declare-styleable>
+
+</resources>

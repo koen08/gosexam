@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="DefaultBody">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/opensans_regular</item>
+        <item name="android:lineSpacingExtra">3sp</item>
+    </style>
+
+    <style name="DefaultTitleBold3">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/opensans_bold</item>
+        <item name="android:lineSpacingExtra">2sp</item>
+    </style>
+
+    <style name="DefaultTitle3">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/opensans_medium</item>
+        <item name="android:lineSpacingExtra">2sp</item>
+    </style>
+
+    <style name="CustomButtonL">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/opensans_medium</item>
+        <item name="android:lineSpacingExtra">2sp</item>
+    </style>
+
+</resources>

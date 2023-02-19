@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "506934240085",
+    "project_id": "gosexam-a7761",
+    "storage_bucket": "gosexam-a7761.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:506934240085:android:61730132254978446305dc",
+        "android_client_info": {
+          "package_name": "com.koen.gosexam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "506934240085-v9objgqivjkc2m4m1dp8h0jn1agesdrn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPmtx3tgBMPrpaGITEzCqlxH3U3zs-2Xw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "506934240085-v9objgqivjkc2m4m1dp8h0jn1agesdrn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
