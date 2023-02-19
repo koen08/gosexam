@@ -1,12 +1,12 @@
 package com.koen.gosexam.presentation.home
 
+import android.graphics.Rect
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.isVisible
-import androidx.core.view.updatePadding
+import android.widget.RelativeLayout
+import androidx.core.view.*
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -14,6 +14,7 @@ import com.koen.gosexam.R
 import com.koen.gosexam.databinding.FragmentHomeBinding
 import com.koen.gosexam.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class HomeFragment :
@@ -29,30 +30,28 @@ class HomeFragment :
             childFragmentManager.findFragmentById(R.id.navHostContainer) as NavHostFragment
         val bottomNav = binding.bottomNav
         bottomNav.setupWithNavController(navHostFragment.navController)
-        applySystemInsets()
+
+
+        WindowInsetsControllerCompat(
+            requireActivity().window,
+            requireActivity().window.decorView
+        ).isAppearanceLightStatusBars = true
     }
 
-    private fun applySystemInsets() {
-        val types = WindowInsetsCompat.Type.systemBars() + WindowInsetsCompat.Type.ime()
-        ViewCompat.setOnApplyWindowInsetsListener(binding.navHostContainer) { _, insets ->
-            val typeInsets = insets.getInsets(types)
+    //todo https://github.com/aurelhubert/ahbottomnavigation/issues/171 ---- https://stackoverflow.com/questions/52391743/bottom-navigation-bar-moves-up-with-keyboard
+    private fun isShowing() {
+        val relative = binding.container
+        relative.viewTreeObserver.addOnGlobalLayoutListener {
+            val r = Rect()
+            // r will be populated with the coordinates of your view
+            // that area still visible.
+            relative.getWindowVisibleDisplayFrame(r)
+            val heightDiff: Int = (relative.rootView.height
+                    - (r.bottom - r.top))
+           // watcherState = heightDiff > 200
 
-            if (insets.isVisible(WindowInsetsCompat.Type.ime())) {
-                binding.apply {
-                    navHostContainer.updatePadding(bottom = typeInsets.bottom)
-                    bottomNav.isVisible = false
-                }
-            } else {
-                binding.apply {
-                    bottomNav.post {
-                        binding.navHostContainer.updatePadding(
-                            bottom = binding.bottomNav.height
-                        )
-                    }
-                    bottomNav.isVisible = true
-                }
-            }
-            insets
+
+            //binding.bottomNav.isVisible = !watcherState
         }
     }
 }

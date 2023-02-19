@@ -141,6 +141,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btnSelectionWorkout" />
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnStartExam"
         style="@style/ButtonPrimary"
         android:layout_width="match_parent"
         android:layout_height="54dp"

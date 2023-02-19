@@ -11,6 +11,7 @@ import com.koen.gosexam.R
 import com.koen.gosexam.databinding.FragmentMainBinding
 import com.koen.gosexam.extension.applyStatusBarInsetsOnly
 import com.koen.gosexam.extension.applyWindowInsets
+import com.koen.gosexam.extension.findTopNavController
 import com.koen.gosexam.presentation.base.BaseFragment
 import com.koen.gosexam.presentation.widget.SelectionButtonMini
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,7 +36,6 @@ class MainFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        applyStatusBarInsetsOnly(binding.toolbar)
         initMapSelectionBtnMini()
         binding.btnSelectionExam.setOnClickListener {
             viewModel.changeTypeExam(TypeExam.EXAM)
@@ -58,6 +58,9 @@ class MainFragment :
         }
         binding.imgInfoExamType.setOnClickListener {
             viewModel.onClickInfoTypeExam()
+        }
+        binding.btnStartExam.setOnClickListener {
+            findTopNavController().navigate(R.id.action_homeFragment_to_examFragment)
         }
         binding.etAmountQuestion.editText?.addTextChangedListener(textWatcher)
     }
