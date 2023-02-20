@@ -47,6 +47,7 @@ ext {
     coroutines = "1.6.4"
     room_version = "2.5.0"
     serialization_version = "1.4.1"
+    adapter_delegate_version = "4.3.2"
 }
 
 dependencies {
@@ -78,4 +79,8 @@ dependencies {
 
     //serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serialization_version")
+
+    //adapter delegate
+    implementation "com.hannesdorfmann:adapterdelegates4-kotlin-dsl:$adapter_delegate_version"
+    implementation "com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:$adapter_delegate_version"
 }

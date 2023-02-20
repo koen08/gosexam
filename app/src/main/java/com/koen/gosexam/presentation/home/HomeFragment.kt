@@ -5,13 +5,15 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.RelativeLayout
+import android.view.WindowManager
 import androidx.core.view.*
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.koen.gosexam.R
 import com.koen.gosexam.databinding.FragmentHomeBinding
+import com.koen.gosexam.extension.collapse
+import com.koen.gosexam.extension.expand
 import com.koen.gosexam.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -36,22 +38,5 @@ class HomeFragment :
             requireActivity().window,
             requireActivity().window.decorView
         ).isAppearanceLightStatusBars = true
-    }
-
-    //todo https://github.com/aurelhubert/ahbottomnavigation/issues/171 ---- https://stackoverflow.com/questions/52391743/bottom-navigation-bar-moves-up-with-keyboard
-    private fun isShowing() {
-        val relative = binding.container
-        relative.viewTreeObserver.addOnGlobalLayoutListener {
-            val r = Rect()
-            // r will be populated with the coordinates of your view
-            // that area still visible.
-            relative.getWindowVisibleDisplayFrame(r)
-            val heightDiff: Int = (relative.rootView.height
-                    - (r.bottom - r.top))
-           // watcherState = heightDiff > 200
-
-
-            //binding.bottomNav.isVisible = !watcherState
-        }
     }
 }

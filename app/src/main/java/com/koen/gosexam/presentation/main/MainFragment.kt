@@ -11,6 +11,7 @@ import com.koen.gosexam.R
 import com.koen.gosexam.databinding.FragmentMainBinding
 import com.koen.gosexam.extension.applyStatusBarInsetsOnly
 import com.koen.gosexam.extension.applyWindowInsets
+import com.koen.gosexam.extension.changeSoftInput
 import com.koen.gosexam.extension.findTopNavController
 import com.koen.gosexam.presentation.base.BaseFragment
 import com.koen.gosexam.presentation.widget.SelectionButtonMini
@@ -37,6 +38,7 @@ class MainFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initMapSelectionBtnMini()
+        changeSoftInput(false)
         binding.btnSelectionExam.setOnClickListener {
             viewModel.changeTypeExam(TypeExam.EXAM)
         }

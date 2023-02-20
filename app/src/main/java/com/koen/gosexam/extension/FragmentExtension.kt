@@ -2,6 +2,7 @@ package com.koen.gosexam.extension
 
 import android.graphics.Rect
 import android.view.View
+import android.view.WindowManager
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -141,4 +142,15 @@ fun Fragment.setNavBarLight(isNavigationBarLight: Boolean) {
         requireActivity().window,
         requireActivity().window.decorView
     ).isAppearanceLightNavigationBars = isNavigationBarLight
+}
+
+fun Fragment.changeSoftInput(maskAdjustResize: Boolean = true) {
+    if (maskAdjustResize) {
+        WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+    } else {
+        WindowManager.LayoutParams.SOFT_INPUT_MASK_ADJUST
+    }.also {
+        activity?.window?.setSoftInputMode(it)
+    }
+
 }

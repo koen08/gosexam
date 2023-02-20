@@ -10,7 +10,8 @@ data class ExamDto(
 
 fun ExamDto.mapToDomain() = Exam(
     question = question,
-    answers = answers
+    answers = answers,
+    id = 0
 )
 
 fun List<ExamDto>.mapToEntityList(): List<ExamEntity> = this.map {
