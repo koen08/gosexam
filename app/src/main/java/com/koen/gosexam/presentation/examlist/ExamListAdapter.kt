@@ -13,14 +13,14 @@ class ExamListAdapter : AsyncListDifferDelegationAdapter<ExamUi>(
             oldItem: ExamUi,
             newItem: ExamUi
         ): Boolean {
-            return oldItem == newItem
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(
             oldItem: ExamUi,
             newItem: ExamUi
         ): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem == newItem
         }
     }
 }

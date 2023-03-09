@@ -8,13 +8,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.koen.gosexam.R
 import com.koen.gosexam.databinding.FragmentExamListBinding
 import com.koen.gosexam.presentation.base.BaseFragment
+import com.koen.gosexam.presentation.models.ExamUi
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ExamListFragment :
     BaseFragment<ExamListUiState, ExamListViewModel, FragmentExamListBinding>(R.layout.fragment_exam_list) {
     override val viewModel: ExamListViewModel by viewModels()
-    private val adapter by lazy {
+    private val adapterExamList by lazy {
         ExamListAdapter()
     }
 
@@ -25,13 +26,13 @@ class ExamListFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.rvQuestions.apply {
-            adapter = adapter
+            adapter = adapterExamList
             layoutManager = LinearLayoutManager(requireContext())
         }
     }
 
     override fun handleUiState(uiState: ExamListUiState) {
         super.handleUiState(uiState)
-        adapter.items = uiState.examList
+        adapterExamList.items = uiState.examList
     }
 }

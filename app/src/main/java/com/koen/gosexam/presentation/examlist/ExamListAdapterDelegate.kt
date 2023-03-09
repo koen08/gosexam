@@ -9,5 +9,6 @@ fun examListAdapterDelegate() = adapterDelegateViewBinding<ExamUi, ExamUi, ItemQ
 ) {
     bind {
         binding.tvQuestion.text = item.question
+        binding.tvNumberQuestion.text = item.numberQuestion
     }
 }
