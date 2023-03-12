@@ -11,4 +11,5 @@
     <string name="main_infoDialogTypeExamContent">В режиме тренировка вы будете видеть ответы сразу.\nЭто поможет вам ознакомиться с тестом. Экзамен проверит ваши знания. Показ ответов будет отключен на время тестирования.</string>
 
     <string name="examList_questionNumber">Вопрос #%s</string>
+    <string name="questionDetails_answerFalseText">%d. %s</string>
 </resources>

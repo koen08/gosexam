@@ -11,9 +11,12 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.koen.gosexam.presentation.dialog.info.InfoDialog
+import com.koen.gosexam.presentation.models.base.UiEvent
 import kotlinx.coroutines.launch
 
-abstract class BaseFragment<UiStateModel : UiState, ViewModel : BaseViewModel<UiStateModel>, ViewBindingModel: ViewBinding>(@LayoutRes fragmentId: Int) :
+abstract class BaseFragment<UiStateModel : UiState, ViewModel : BaseViewModel<UiStateModel>, ViewBindingModel : ViewBinding>(
+    @LayoutRes fragmentId: Int
+) :
     Fragment(fragmentId) {
 
     lateinit var binding: ViewBindingModel
@@ -21,12 +24,15 @@ abstract class BaseFragment<UiStateModel : UiState, ViewModel : BaseViewModel<Ui
 
     open fun handleUiState(uiState: UiStateModel) = Unit
 
-    abstract fun initViewBinding(inflater: LayoutInflater) : ViewBindingModel
+    open fun handleUiEvent(uiEvent: UiEvent) = Unit
+
+    abstract fun initViewBinding(inflater: LayoutInflater): ViewBindingModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         collectUiState()
         collectInfoDialog()
+        setUiEventFlowCollect()
     }
 
     override fun onCreateView(
@@ -50,11 +56,23 @@ abstract class BaseFragment<UiStateModel : UiState, ViewModel : BaseViewModel<Ui
         }
     }
 
+    fun setUiEventFlowCollect() {
+        lifecycleScope.launch {
+            viewModel
+                .uiEvent
+                .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                .collect {
+                    handleUiEvent(it)
+                }
+        }
+    }
+
     private fun collectInfoDialog() {
         lifecycleScope.launch {
-            viewModel.infoDialogSharedFlow.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED).collect {
-                InfoDialog.create(requireContext(), it).show()
-            }
+            viewModel.infoDialogSharedFlow.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                .collect {
+                    InfoDialog.create(requireContext(), it).show()
+                }
         }
     }
 }

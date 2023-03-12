@@ -4,12 +4,26 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/homeFragment">
     <fragment
+        android:id="@+id/questionDetailsFragment"
+        android:name="com.koen.gosexam.presentation.question.details.QuestionDetailsFragment"
+        android:label="QuestionDetailsFragment">
+        <argument
+            android:name="examUi"
+            app:argType="com.koen.gosexam.presentation.models.ExamUi" />
+    </fragment>
+    <fragment
         android:id="@+id/homeFragment"
         android:name="com.koen.gosexam.presentation.home.HomeFragment"
         android:label="HomeFragment" >
         <action
             android:id="@+id/action_homeFragment_to_examFragment"
             app:destination="@id/examFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_homeFragment_to_questionDetailsFragment"
+            app:destination="@id/questionDetailsFragment"
+            app:enterAnim="@android:anim/fade_in"
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="false" />
     </fragment>

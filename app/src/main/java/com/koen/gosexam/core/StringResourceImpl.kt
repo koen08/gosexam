@@ -8,4 +8,8 @@ class StringResourceImpl(private val resource: Resources) : StringResource {
         return resource.getString(R.string.examList_questionNumber, number)
     }
 
+    override fun answerFalseText(answer: String, index: Int): String {
+        return resource.getString(R.string.questionDetails_answerFalseText ,index, answer)
+    }
+
 }

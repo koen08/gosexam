@@ -1,11 +1,12 @@
 package com.koen.gosexam.presentation.base
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.koen.gosexam.presentation.dialog.info.InfoDialogModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import com.koen.gosexam.presentation.models.base.UiEvent
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 abstract class BaseViewModel<UiStateModel: UiState> : ViewModel() {
     protected abstract val _uiState: MutableStateFlow<UiStateModel>
@@ -13,4 +14,14 @@ abstract class BaseViewModel<UiStateModel: UiState> : ViewModel() {
 
     protected val _infoDialogSharedFlow = MutableSharedFlow<InfoDialogModel>()
     val infoDialogSharedFlow = _infoDialogSharedFlow.asSharedFlow()
+
+    protected open val _uiEvent: Channel<UiEvent> = Channel()
+    open val uiEvent: Flow<UiEvent> by lazy { _uiEvent.receiveAsFlow() }
+
+
+    fun sendEvent(uiEvent: UiEvent) {
+        viewModelScope.launch {
+            _uiEvent.send(uiEvent)
+        }
+    }
 }

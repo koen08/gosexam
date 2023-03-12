@@ -13,7 +13,6 @@ import kotlin.coroutines.resume
 class ExamRemoteDataSourceImpl @Inject constructor() : ExamRemoteDataSource {
     companion object {
         private const val INDEX_QUESTION = 0
-        private const val INDEX_START_ANSWERS = 1
     }
 
     override suspend fun getExam(): List<ExamDto> {
@@ -21,14 +20,14 @@ class ExamRemoteDataSourceImpl @Inject constructor() : ExamRemoteDataSource {
         return suspendCancellableCoroutine { continuation ->
             val storageRef = FirebaseStorage.getInstance().reference
             val child = storageRef.child("exam.txt")
-            child.getBytes(10000).addOnSuccessListener {
-                val inputStream = InputStreamReader(ByteArrayInputStream(it))
+            child.getStream { state, stream ->
+                val inputStream = InputStreamReader(stream)
                 val buffer = mutableListOf<String>()
                 inputStream.readLines().forEachIndexed { index, line ->
                     if (line == "EXIT") return@forEachIndexed
-                    if (line.isNotEmpty()) {
+                    if (line != "!") {
                         buffer.add(line)
-                    } else if ((index + 1) % 6 == 0) {
+                    } else {
                         examDtoList.add(
                             createFromQuestion(buffer)
                         )

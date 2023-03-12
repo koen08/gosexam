@@ -4,9 +4,9 @@ import androidx.recyclerview.widget.DiffUtil
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.koen.gosexam.presentation.models.ExamUi
 
-class ExamListAdapter : AsyncListDifferDelegationAdapter<ExamUi>(
+class ExamListAdapter(onClickListener: (ExamUi) -> Unit) : AsyncListDifferDelegationAdapter<ExamUi>(
     DiffUtils(),
-    examListAdapterDelegate()
+    examListAdapterDelegate(onClickListener)
 ) {
     class DiffUtils : DiffUtil.ItemCallback<ExamUi>() {
         override fun areItemsTheSame(

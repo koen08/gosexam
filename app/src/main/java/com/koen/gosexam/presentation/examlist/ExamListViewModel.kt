@@ -4,6 +4,8 @@ import androidx.lifecycle.viewModelScope
 import com.koen.gosexam.domain.exam.GetExamListUseCase
 import com.koen.gosexam.presentation.base.BaseViewModel
 import com.koen.gosexam.presentation.exam.ExamUiState
+import com.koen.gosexam.presentation.models.ExamUi
+import com.koen.gosexam.presentation.models.uiEvent.OpenDetailsQuestion
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ExamListViewModel @Inject constructor(
     private val getExamListUseCase: GetExamListUseCase
-): BaseViewModel<ExamListUiState>() {
+) : BaseViewModel<ExamListUiState>() {
     override val _uiState: MutableStateFlow<ExamListUiState> = MutableStateFlow(ExamListUiState())
     override val uiState: StateFlow<ExamListUiState> = _uiState.asStateFlow()
 
@@ -27,6 +29,12 @@ class ExamListViewModel @Inject constructor(
                     examList = result
                 )
             }
+        }
+    }
+
+    fun openDetails(examUi: ExamUi) {
+        viewModelScope.launch {
+            _uiEvent.send(OpenDetailsQuestion(examUi))
         }
     }
 }

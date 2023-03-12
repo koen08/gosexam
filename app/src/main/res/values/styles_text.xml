@@ -7,6 +7,12 @@
         <item name="android:lineSpacingExtra">3sp</item>
     </style>
 
+    <style name="DefaultTitle2">
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/opensans_regular</item>
+        <item name="android:lineSpacingExtra">3sp</item>
+    </style>
+
     <style name="DefaultTitleBold3">
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/opensans_bold</item>
@@ -28,6 +34,12 @@
     <style name="DefaultBadge">
         <item name="android:textSize">12sp</item>
         <item name="android:fontFamily">@font/opensans_medium</item>
+        <item name="android:lineSpacingExtra">2sp</item>
+    </style>
+
+    <style name="CustomBodySBold">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/opensans_bold</item>
         <item name="android:lineSpacingExtra">2sp</item>
     </style>
 
