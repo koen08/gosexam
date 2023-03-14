@@ -17,7 +17,7 @@ class QuestionDetailsFragment :
     BaseFragment<QuestionDetailsUiState, QuestionDetailsViewModel, FragmentQuestionDetailsBinding>(R.layout.fragment_question_details) {
 
     companion object {
-        const val KEY_ARG_QUESTION_EXAM_UI = "examUi"
+        const val KEY_ARG_QUESTION_EXAM_UI = "questionUi"
         const val INDEX_TRUE_ANSWER = 0
     }
 

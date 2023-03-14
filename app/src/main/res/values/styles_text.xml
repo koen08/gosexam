@@ -31,6 +31,12 @@
         <item name="android:lineSpacingExtra">2sp</item>
     </style>
 
+    <style name="DefaultBadgeLarge">
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">@font/opensans_medium</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+    </style>
+
     <style name="DefaultBadge">
         <item name="android:textSize">12sp</item>
         <item name="android:fontFamily">@font/opensans_medium</item>

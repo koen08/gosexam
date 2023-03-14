@@ -30,4 +30,10 @@ class ExamRepositoryImpl @Inject constructor(
         return examDao.getBonusCards().mapToDomain()
     }
 
+    override suspend fun generateExam(countQuestion: Int): List<Exam> {
+        return examDao.generateExamTest(
+            count = countQuestion
+        ).mapToDomain()
+    }
+
 }

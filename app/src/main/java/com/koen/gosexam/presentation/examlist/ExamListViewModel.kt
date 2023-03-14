@@ -3,8 +3,7 @@ package com.koen.gosexam.presentation.examlist
 import androidx.lifecycle.viewModelScope
 import com.koen.gosexam.domain.exam.GetExamListUseCase
 import com.koen.gosexam.presentation.base.BaseViewModel
-import com.koen.gosexam.presentation.exam.ExamUiState
-import com.koen.gosexam.presentation.models.ExamUi
+import com.koen.gosexam.presentation.models.QuestionUi
 import com.koen.gosexam.presentation.models.uiEvent.OpenDetailsQuestion
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,9 +31,9 @@ class ExamListViewModel @Inject constructor(
         }
     }
 
-    fun openDetails(examUi: ExamUi) {
+    fun openDetails(questionUi: QuestionUi) {
         viewModelScope.launch {
-            _uiEvent.send(OpenDetailsQuestion(examUi))
+            _uiEvent.send(OpenDetailsQuestion(questionUi))
         }
     }
 }

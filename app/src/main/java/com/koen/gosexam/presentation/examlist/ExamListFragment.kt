@@ -5,15 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.koen.gosexam.R
 import com.koen.gosexam.databinding.FragmentExamListBinding
 import com.koen.gosexam.extension.findTopNavController
 import com.koen.gosexam.presentation.base.BaseFragment
-import com.koen.gosexam.presentation.models.ExamUi
 import com.koen.gosexam.presentation.models.base.UiEvent
 import com.koen.gosexam.presentation.models.uiEvent.OpenDetailsQuestion
+import com.koen.gosexam.presentation.question.details.QuestionDetailsFragment.Companion.KEY_ARG_QUESTION_EXAM_UI
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -47,7 +46,7 @@ class ExamListFragment :
         super.handleUiEvent(uiEvent)
         if (uiEvent is OpenDetailsQuestion) {
             findTopNavController().navigate(R.id.action_homeFragment_to_questionDetailsFragment, bundleOf(
-                "examUi" to uiEvent.examUi
+                KEY_ARG_QUESTION_EXAM_UI to uiEvent.questionUi
             ))
         }
     }

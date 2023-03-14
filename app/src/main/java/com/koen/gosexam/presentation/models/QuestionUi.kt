@@ -4,9 +4,9 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class ExamUi(
+data class QuestionUi(
     val id: Int = 0,
     val question: String = "",
-    val answers: List<AnswerTestUi> = emptyList(),
-    val positionQuestionTitle: String = ""
+    val answers: List<String> = emptyList(),
+    val numberQuestion: String = ""
 ) : Parcelable

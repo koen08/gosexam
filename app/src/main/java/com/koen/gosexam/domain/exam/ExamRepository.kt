@@ -6,4 +6,6 @@ interface ExamRepository {
     suspend fun getExam()
 
     suspend fun getExamFromLocal() : List<Exam>
+
+    suspend fun generateExam(countQuestion: Int) : List<Exam>
 }

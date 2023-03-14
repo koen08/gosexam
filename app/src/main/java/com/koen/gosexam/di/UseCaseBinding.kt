@@ -1,9 +1,6 @@
 package com.koen.gosexam.di
 
-import com.koen.gosexam.domain.exam.GetExamListUseCase
-import com.koen.gosexam.domain.exam.GetExamListUseCaseImpl
-import com.koen.gosexam.domain.exam.GetExamUseCase
-import com.koen.gosexam.domain.exam.GetExamUseCaseImpl
+import com.koen.gosexam.domain.exam.*
 import com.koen.gosexam.domain.question.PrepareFalseAnswerUseCase
 import com.koen.gosexam.domain.question.PrepareFalseAnswerUseCaseImpl
 import dagger.Binds
@@ -22,4 +19,7 @@ interface UseCaseBinding {
 
     @Binds
     fun bindPrepareFalseAnswerUseCase(userCase: PrepareFalseAnswerUseCaseImpl) : PrepareFalseAnswerUseCase
+
+    @Binds
+    fun bindGenerateExamUseCase(useCase : GenerateExamUseCaseImpl) : GenerateExamUseCase
 }

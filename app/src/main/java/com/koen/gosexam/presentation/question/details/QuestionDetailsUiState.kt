@@ -1,7 +1,6 @@
 package com.koen.gosexam.presentation.question.details
 
 import com.koen.gosexam.presentation.base.UiState
-import com.koen.gosexam.presentation.models.ExamUi
 import com.koen.gosexam.presentation.models.QuestionDetailsUi
 
 data class QuestionDetailsUiState(val questionDetailsUi: QuestionDetailsUi = QuestionDetailsUi()) :

@@ -2,6 +2,8 @@ package com.koen.gosexam.domain.models
 
 import com.koen.gosexam.core.StringResource
 import com.koen.gosexam.presentation.models.ExamUi
+import com.koen.gosexam.presentation.models.QuestionUi
+import com.koen.gosexam.presentation.models.mapToPresentation
 
 data class Exam(
     val id: Int,
@@ -9,11 +11,20 @@ data class Exam(
     val answers: List<String>
 )
 
-fun List<Exam>.mapToPresentation(stringResource: StringResource) = map {
+fun List<Exam>.mapToPresentation(stringResource: StringResource) = mapIndexed { index, exam ->
+    QuestionUi(
+        id = exam.id,
+        question = exam.question,
+        answers = exam.answers,
+        numberQuestion = stringResource.getNumberQuestion((index + 1).toString())
+    )
+}
+
+fun List<Exam>.mapToExamTestPresentation(stringResource: StringResource) = mapIndexed { index, exam ->
     ExamUi(
-        id = it.id,
-        question = it.question,
-        answers = it.answers,
-        numberQuestion = stringResource.getNumberQuestion(it.id.toString())
+        id = exam.id,
+        question = exam.question,
+        answers = exam.answers.map { it.mapToPresentation() },
+        positionQuestionTitle = stringResource.positionFromCommon((index + 1), this.size)
     )
 }

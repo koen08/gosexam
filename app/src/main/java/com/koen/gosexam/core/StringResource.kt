@@ -4,4 +4,6 @@ interface StringResource {
     fun getNumberQuestion(number: String) : String
 
     fun answerFalseText(answer: String, index: Int) : String
+
+    fun positionFromCommon(index: Int, common: Int) : String
 }

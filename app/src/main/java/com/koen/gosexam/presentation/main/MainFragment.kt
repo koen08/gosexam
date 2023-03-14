@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import com.koen.gosexam.R
 import com.koen.gosexam.databinding.FragmentMainBinding
@@ -14,6 +15,11 @@ import com.koen.gosexam.extension.applyWindowInsets
 import com.koen.gosexam.extension.changeSoftInput
 import com.koen.gosexam.extension.findTopNavController
 import com.koen.gosexam.presentation.base.BaseFragment
+import com.koen.gosexam.presentation.exam.ExamFragment.Companion.KEY_ARG_EXAM_TEST_UI
+import com.koen.gosexam.presentation.models.base.UiEvent
+import com.koen.gosexam.presentation.models.uiEvent.OpenDetailsQuestion
+import com.koen.gosexam.presentation.models.uiEvent.OpenExamTest
+import com.koen.gosexam.presentation.question.details.QuestionDetailsFragment
 import com.koen.gosexam.presentation.widget.SelectionButtonMini
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -62,7 +68,7 @@ class MainFragment :
             viewModel.onClickInfoTypeExam()
         }
         binding.btnStartExam.setOnClickListener {
-            findTopNavController().navigate(R.id.action_homeFragment_to_examFragment)
+            viewModel.generateExam()
         }
         binding.etAmountQuestion.editText?.addTextChangedListener(textWatcher)
     }
@@ -82,6 +88,19 @@ class MainFragment :
         binding.etAmountQuestion.editText?.setText(uiState.currentText)
         val text = binding.etAmountQuestion.editText?.text.toString().length
         binding.etAmountQuestion.editText?.setSelection(text)
+    }
+
+    override fun handleUiEvent(uiEvent: UiEvent) {
+        super.handleUiEvent(uiEvent)
+        when (uiEvent) {
+            is OpenExamTest -> {
+                findTopNavController().navigate(
+                    R.id.action_homeFragment_to_examFragment, bundleOf(
+                        KEY_ARG_EXAM_TEST_UI to uiEvent.examUiList
+                    )
+                )
+            }
+        }
     }
 
     override val viewModel: MainViewModel by viewModels()

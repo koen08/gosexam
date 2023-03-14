@@ -12,4 +12,8 @@ class StringResourceImpl(private val resource: Resources) : StringResource {
         return resource.getString(R.string.questionDetails_answerFalseText ,index, answer)
     }
 
+    override fun positionFromCommon(index: Int, common: Int): String {
+        return resource.getString(R.string.examTest_positionFromCommon, index.toString(), common.toString())
+    }
+
 }

@@ -18,4 +18,9 @@ interface ExamDao {
         SELECT * FROM exam_table
     """)
     fun getBonusCards() : List<ExamEntity>
+
+    @Query(
+        "SELECT * FROM exam_table ORDER BY RANDOM() LIMIT :count"
+    )
+    fun generateExamTest(count : Int) : List<ExamEntity>
 }

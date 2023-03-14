@@ -2,9 +2,9 @@ package com.koen.gosexam.presentation.examlist
 
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.koen.gosexam.databinding.ItemQuestionBinding
-import com.koen.gosexam.presentation.models.ExamUi
+import com.koen.gosexam.presentation.models.QuestionUi
 
-fun examListAdapterDelegate(onClickListener: (ExamUi) -> Unit) = adapterDelegateViewBinding<ExamUi, ExamUi, ItemQuestionBinding>(
+fun examListAdapterDelegate(onClickListener: (QuestionUi) -> Unit) = adapterDelegateViewBinding<QuestionUi, QuestionUi, ItemQuestionBinding>(
     { layoutInflater, root -> ItemQuestionBinding.inflate(layoutInflater, root, false) }
 ) {
     bind {

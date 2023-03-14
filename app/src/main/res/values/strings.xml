@@ -12,4 +12,5 @@
 
     <string name="examList_questionNumber">Вопрос #%s</string>
     <string name="questionDetails_answerFalseText">%d. %s</string>
+    <string name="examTest_positionFromCommon">%s из %s</string>
 </resources>

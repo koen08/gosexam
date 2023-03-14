@@ -2,11 +2,14 @@ package com.koen.gosexam.presentation.main
 
 import androidx.lifecycle.viewModelScope
 import com.koen.gosexam.R
+import com.koen.gosexam.domain.exam.GenerateExamUseCase
 import com.koen.gosexam.domain.exam.GetExamUseCase
+import com.koen.gosexam.extension.toIntOrZero
 import com.koen.gosexam.presentation.base.BaseViewModel
 import com.koen.gosexam.presentation.core.Text
 import com.koen.gosexam.presentation.dialog.info.InfoDialogBtnModel
 import com.koen.gosexam.presentation.dialog.info.InfoDialogModel
+import com.koen.gosexam.presentation.models.uiEvent.OpenExamTest
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,7 +20,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val getExamUseCase: GetExamUseCase
+    private val getExamUseCase: GetExamUseCase,
+    private val generateExamUseCase: GenerateExamUseCase
 ) : BaseViewModel<MainUiState>() {
     override val _uiState: MutableStateFlow<MainUiState> = MutableStateFlow(MainUiState())
     override val uiState: StateFlow<MainUiState> = _uiState.asStateFlow()
@@ -72,6 +76,13 @@ class MainViewModel @Inject constructor(
             _infoDialogSharedFlow.emit(
                 infoDialog
             )
+        }
+    }
+
+    fun generateExam(countQuestion: Int = uiState.value.currentText.toIntOrZero()) {
+        viewModelScope.launch {
+            val result = generateExamUseCase(countQuestion)
+            sendEvent(OpenExamTest(result))
         }
     }
 }
