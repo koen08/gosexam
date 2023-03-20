@@ -29,7 +29,7 @@
     </fragment>
     <fragment
         android:id="@+id/examFragment"
-        android:name="com.koen.gosexam.presentation.exam.ExamFragment"
+        android:name="com.koen.gosexam.presentation.exam.ExamTestFragment"
         android:label="ExamFragment" >
         <argument
             android:name="examUiList"

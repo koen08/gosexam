@@ -1,20 +1,19 @@
 package com.koen.gosexam.presentation.exam
 
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.koen.gosexam.databinding.ItemAnswerExamTestBinding
 import com.koen.gosexam.databinding.ItemQuestionAnswersBinding
-import com.koen.gosexam.databinding.ItemQuestionBinding
 import com.koen.gosexam.presentation.models.AnswerTestUi
 import com.koen.gosexam.presentation.models.ExamUi
-import com.koen.gosexam.presentation.models.QuestionUi
 
 fun examAdapterDelegate(onClickExamListener: (ExamUi, AnswerTestUi) -> Unit) =
     adapterDelegateViewBinding<ExamUi, ExamUi, ItemQuestionAnswersBinding>(
         { layoutInflater, root -> ItemQuestionAnswersBinding.inflate(layoutInflater, root, false) }
     ) {
         bind {
-            val adapterAnswer = AnswerAdapter { answerTestUi ->
+            val adapterAnswer = AnswerTestAdapter { answerTestUi ->
                 onClickExamListener(item, answerTestUi)
             }
             binding.run {
@@ -35,6 +34,7 @@ fun examAnswerAdapterDelegate(onClickAnswerListener: (AnswerTestUi) -> Unit) =
         bind {
             binding.run {
                 tvAnswer.text = item.text
+                container.background = ContextCompat.getDrawable(context, item.backgroundSelected)
                 root.setOnClickListener {
                     onClickAnswerListener(item)
                 }

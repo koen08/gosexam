@@ -5,21 +5,21 @@ import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.koen.gosexam.presentation.models.AnswerTestUi
 import com.koen.gosexam.presentation.models.ExamUi
 
-class AnswerAdapter(onClickAnswerListener: (AnswerTestUi) -> Unit) : AsyncListDifferDelegationAdapter<AnswerTestUi>(
+class ExamTestAdapter(onClickExamListener: (ExamUi, AnswerTestUi) -> Unit) : AsyncListDifferDelegationAdapter<ExamUi>(
     DiffCallback(),
-    examAnswerAdapterDelegate(onClickAnswerListener)
+    examAdapterDelegate(onClickExamListener)
 ) {
-    class DiffCallback : DiffUtil.ItemCallback<AnswerTestUi>() {
+    class DiffCallback : DiffUtil.ItemCallback<ExamUi>() {
         override fun areItemsTheSame(
-            oldItem: AnswerTestUi,
-            newItem: AnswerTestUi
+            oldItem: ExamUi,
+            newItem: ExamUi
         ): Boolean {
-            return oldItem.text == newItem.text
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(
-            oldItem: AnswerTestUi,
-            newItem: AnswerTestUi
+            oldItem: ExamUi,
+            newItem: ExamUi
         ): Boolean {
             return oldItem == newItem
         }

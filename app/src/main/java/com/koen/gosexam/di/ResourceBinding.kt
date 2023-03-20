@@ -12,17 +12,22 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 class ResourceBinding {
     @Provides
-    fun stringResourceProvide(@ApplicationContext context: Context) : StringResource {
+    fun stringResourceProvide(@ApplicationContext context: Context): StringResource {
         return StringResourceImpl(context.resources)
     }
 
     @Provides
-    fun colorResourceProvide(@ApplicationContext context: Context) : ColorResource {
+    fun colorResourceProvide(@ApplicationContext context: Context): ColorResource {
         return ColorResourceImpl(context)
     }
 
     @Provides
-    fun styleResourceProvide() : StyleResource {
+    fun styleResourceProvide(): StyleResource {
         return StyleResourceImpl()
+    }
+
+    @Provides
+    fun drawableResource(@ApplicationContext context: Context): DrawableResource {
+        return DrawableResourceImpl(context)
     }
 }

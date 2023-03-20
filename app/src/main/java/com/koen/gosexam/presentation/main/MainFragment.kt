@@ -10,16 +10,12 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import com.koen.gosexam.R
 import com.koen.gosexam.databinding.FragmentMainBinding
-import com.koen.gosexam.extension.applyStatusBarInsetsOnly
-import com.koen.gosexam.extension.applyWindowInsets
 import com.koen.gosexam.extension.changeSoftInput
 import com.koen.gosexam.extension.findTopNavController
 import com.koen.gosexam.presentation.base.BaseFragment
-import com.koen.gosexam.presentation.exam.ExamFragment.Companion.KEY_ARG_EXAM_TEST_UI
+import com.koen.gosexam.presentation.exam.ExamTestFragment.Companion.KEY_ARG_EXAM_TEST_UI
 import com.koen.gosexam.presentation.models.base.UiEvent
-import com.koen.gosexam.presentation.models.uiEvent.OpenDetailsQuestion
 import com.koen.gosexam.presentation.models.uiEvent.OpenExamTest
-import com.koen.gosexam.presentation.question.details.QuestionDetailsFragment
 import com.koen.gosexam.presentation.widget.SelectionButtonMini
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -3,23 +3,22 @@ package com.koen.gosexam.presentation.exam
 import androidx.recyclerview.widget.DiffUtil
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.koen.gosexam.presentation.models.AnswerTestUi
-import com.koen.gosexam.presentation.models.ExamUi
 
-class ExamAdapter(onClickExamListener: (ExamUi, AnswerTestUi) -> Unit) : AsyncListDifferDelegationAdapter<ExamUi>(
+class AnswerTestAdapter(onClickAnswerListener: (AnswerTestUi) -> Unit) : AsyncListDifferDelegationAdapter<AnswerTestUi>(
     DiffCallback(),
-    examAdapterDelegate(onClickExamListener)
+    examAnswerAdapterDelegate(onClickAnswerListener)
 ) {
-    class DiffCallback : DiffUtil.ItemCallback<ExamUi>() {
+    class DiffCallback : DiffUtil.ItemCallback<AnswerTestUi>() {
         override fun areItemsTheSame(
-            oldItem: ExamUi,
-            newItem: ExamUi
+            oldItem: AnswerTestUi,
+            newItem: AnswerTestUi
         ): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem.text == newItem.text
         }
 
         override fun areContentsTheSame(
-            oldItem: ExamUi,
-            newItem: ExamUi
+            oldItem: AnswerTestUi,
+            newItem: AnswerTestUi
         ): Boolean {
             return oldItem == newItem
         }

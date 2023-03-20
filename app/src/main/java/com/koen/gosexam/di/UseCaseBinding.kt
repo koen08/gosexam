@@ -22,4 +22,7 @@ interface UseCaseBinding {
 
     @Binds
     fun bindGenerateExamUseCase(useCase : GenerateExamUseCaseImpl) : GenerateExamUseCase
+
+    @Binds
+    fun bindPrepareAnswerTestUseCase(useCase: PrepareAnswerTestUseCaseImpl) : PrepareAnswerTestUseCase
 }
