@@ -13,32 +13,25 @@ class PrepareAnswerTestUseCaseImpl @Inject constructor(
         examSelected: ExamUi,
         examUiList: List<ExamUi>
     ): List<ExamUi> {
-        return examUiList.map { exam ->
-            if (examSelected.question == exam.question) {
-                exam.copy(
-                    answers = exam.answers.map { answer ->
-                        if (answer.text == answerSelected.text) {
-                            answer.copy(
-                                selected = true,
-                                backgroundSelected = drawableResource.getSelectedPrimary80ElseGray60(true)
-                            )
-                        } else {
-                            answer.copy(
-                                selected = false,
-                                backgroundSelected = drawableResource.getSelectedPrimary80ElseGray60(false)
-                            )
-                        }
-                    }
+        val newList = examUiList.toList()
+        val examUi = newList.find { it.question == examSelected.question }
+        val answersNew = examUi?.answers?.map {
+            val isSelected = it.text == answerSelected.text
+            it.copy(
+                selected = isSelected,
+                backgroundSelected = drawableResource.getSelectedIsTrueGreen50ElseError50OrGray60(
+                    it.isTrue,
+                    isSelected
+                )
+            )
+        }
+        return newList.map {
+            if (it.question == examUi?.question) {
+                it.copy(
+                    answers = answersNew ?: emptyList()
                 )
             } else {
-                exam.copy(
-                    answers = exam.answers.map { answer ->
-                        answer.copy(
-                            selected = false,
-                            backgroundSelected = drawableResource.getSelectedPrimary80ElseGray60(false)
-                        )
-                    }
-                )
+                it.copy()
             }
         }
     }

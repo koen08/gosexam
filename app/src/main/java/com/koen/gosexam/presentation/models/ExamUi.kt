@@ -7,6 +7,7 @@ import kotlinx.parcelize.Parcelize
 data class ExamUi(
     val id: Int = 0,
     val question: String = "",
+    val answerTrue: String = "",
     val answers: List<AnswerTestUi> = emptyList(),
     val positionQuestionTitle: String = ""
 ) : Parcelable

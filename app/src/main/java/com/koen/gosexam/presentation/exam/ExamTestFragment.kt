@@ -1,13 +1,24 @@
 package com.koen.gosexam.presentation.exam
 
+import android.animation.Animator
+import android.animation.Animator.AnimatorListener
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import androidx.core.animation.doOnEnd
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.koen.gosexam.R
 import com.koen.gosexam.databinding.FragmentExamBinding
 import com.koen.gosexam.extension.applyStatusBarInsetsOnly
+import com.koen.gosexam.extension.hideBtn
+import com.koen.gosexam.extension.showBtn
 import com.koen.gosexam.presentation.base.BaseFragment
+import com.koen.gosexam.presentation.models.base.UiEvent
+import com.koen.gosexam.presentation.models.uiEvent.HideButton
+import com.koen.gosexam.presentation.models.uiEvent.ShowButton
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -38,12 +49,30 @@ class ExamTestFragment :
                 adapter = adapterExam
                 isUserInputEnabled = false
             }
+            btnNext.setOnClickListener {
+                viewModel.updatePosition()
+            }
         }
     }
 
     override fun handleUiState(uiState: ExamTestUiState) {
         super.handleUiState(uiState)
         adapterExam.items = uiState.examUiList
+        binding.vpExam.setCurrentItem(uiState.currentPosition, true)
+        uiState.currentExam?.let { element ->
+            binding.toolbar.title = element.positionQuestionTitle
+        }
+    }
+
+    override fun handleUiEvent(uiEvent: UiEvent) {
+        super.handleUiEvent(uiEvent)
+        if (uiEvent is ShowButton) {
+            binding.btnNext.showBtn()
+
+        }
+        if (uiEvent is HideButton) {
+            binding.btnNext.hideBtn()
+        }
     }
 
 }
