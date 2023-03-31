@@ -62,6 +62,7 @@ class ExamTestFragment :
         uiState.currentExam?.let { element ->
             binding.toolbar.title = element.positionQuestionTitle
         }
+        binding.btnNext.text = uiState.btnText
     }
 
     override fun handleUiEvent(uiEvent: UiEvent) {

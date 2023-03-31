@@ -1,9 +1,14 @@
 package com.koen.gosexam.core
 
 interface StringResource {
-    fun getNumberQuestion(number: String) : String
+    val btnCompleteText: String
 
-    fun answerFalseText(answer: String, index: Int) : String
+    val btnNextText: String
+    fun getNumberQuestion(number: String): String
 
-    fun positionFromCommon(index: Int, common: Int) : String
+    fun answerFalseText(answer: String, index: Int): String
+
+    fun positionFromCommon(index: Int, common: Int): String
+
+    fun getTextBtnCompleteOrNext(complete: Boolean) : String
 }

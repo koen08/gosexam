@@ -6,6 +6,7 @@ import com.koen.gosexam.presentation.models.ExamUi
 data class ExamTestUiState(
     val examUiList: List<ExamUi>,
     val currentPosition: Int = 0,
+    val btnText: String = "",
 ) : UiState {
     val currentExam get() = examUiList.getOrNull(currentPosition)
 }

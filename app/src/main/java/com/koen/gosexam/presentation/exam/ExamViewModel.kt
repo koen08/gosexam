@@ -3,6 +3,7 @@ package com.koen.gosexam.presentation.exam
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.koen.gosexam.core.StringResource
 import com.koen.gosexam.domain.exam.PrepareAnswerTestUseCase
 import com.koen.gosexam.extension.getListOrEmpty
 import com.koen.gosexam.presentation.base.BaseViewModel
@@ -24,7 +25,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ExamViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val prepareAnswerTestUseCase: PrepareAnswerTestUseCase
+    private val prepareAnswerTestUseCase: PrepareAnswerTestUseCase,
+    private val stringResource: StringResource
 ) : BaseViewModel<ExamTestUiState>() {
     override val _uiState: MutableStateFlow<ExamTestUiState> = MutableStateFlow(
         ExamTestUiState(
@@ -32,7 +34,6 @@ class ExamViewModel @Inject constructor(
         )
     )
     override val uiState: StateFlow<ExamTestUiState> = _uiState.asStateFlow()
-
 
     fun updateAnswerList(answerSelected: AnswerTestUi, examSelected: ExamUi) {
         viewModelScope.launch {
@@ -43,7 +44,12 @@ class ExamViewModel @Inject constructor(
                     uiState.value.examUiList
                 )
             }
+            val position = uiState.value.currentPosition
+            val btnText = stringResource.getTextBtnCompleteOrNext(
+                complete = position + 1 >= examNewList.size
+            )
             updateExamUi(examNewList)
+            updateBtnText(btnText)
             showButton()
         }
     }
@@ -61,6 +67,14 @@ class ExamViewModel @Inject constructor(
         _uiState.update { state ->
             state.copy(
                 examUiList = examUiList
+            )
+        }
+    }
+
+    private fun updateBtnText(btnText: String) {
+        _uiState.update { state ->
+            state.copy(
+                btnText = btnText
             )
         }
     }

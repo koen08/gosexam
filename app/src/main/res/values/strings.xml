@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">gosexam</string>
 
+    <string name="common_сontinue">Продолжить</string>
+    <string name="common_next">Далее</string>
+    <string name="common_complete">Завершить</string>
+
     <string name="menu_filter">Главная</string>
     <string name="menu_examList">Список вопросов</string>
     <string name="menu_profile">Профиль</string>
@@ -13,5 +17,4 @@
     <string name="examList_questionNumber">Вопрос #%s</string>
     <string name="questionDetails_answerFalseText">%d. %s</string>
     <string name="examTest_positionFromCommon">%s из %s</string>
-    <string name="common_сontinue">Продолжить</string>
 </resources>
