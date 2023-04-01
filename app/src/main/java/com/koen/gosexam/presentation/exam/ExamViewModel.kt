@@ -5,6 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.koen.gosexam.core.StringResource
 import com.koen.gosexam.domain.exam.PrepareAnswerTestUseCase
+import com.koen.gosexam.domain.exam.PrepareResultTestUseCase
 import com.koen.gosexam.extension.getListOrEmpty
 import com.koen.gosexam.presentation.base.BaseViewModel
 import com.koen.gosexam.presentation.exam.ExamTestFragment.Companion.KEY_ARG_EXAM_TEST_UI
@@ -26,6 +27,7 @@ import javax.inject.Inject
 class ExamViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val prepareAnswerTestUseCase: PrepareAnswerTestUseCase,
+    private val prepareResultTestUseCase: PrepareResultTestUseCase,
     private val stringResource: StringResource
 ) : BaseViewModel<ExamTestUiState>() {
     override val _uiState: MutableStateFlow<ExamTestUiState> = MutableStateFlow(

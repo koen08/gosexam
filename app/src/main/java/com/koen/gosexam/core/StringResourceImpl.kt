@@ -10,16 +10,27 @@ class StringResourceImpl(private val resource: Resources) : StringResource {
 
     override val btnCompleteText: String
         get() = resource.getString(R.string.common_complete)
+
+    override val resultTitleFail: String
+        get() = resource.getString(R.string.examResult_failTest)
+
+    override val resultTitleSuccess: String
+        get() = resource.getString(R.string.examResult_successTest)
+
     override fun getNumberQuestion(number: String): String {
         return resource.getString(R.string.examList_questionNumber, number)
     }
 
     override fun answerFalseText(answer: String, index: Int): String {
-        return resource.getString(R.string.questionDetails_answerFalseText ,index, answer)
+        return resource.getString(R.string.questionDetails_answerFalseText, index, answer)
     }
 
     override fun positionFromCommon(index: Int, common: Int): String {
-        return resource.getString(R.string.examTest_positionFromCommon, index.toString(), common.toString())
+        return resource.getString(
+            R.string.examTest_positionFromCommon,
+            index.toString(),
+            common.toString()
+        )
     }
 
     override fun getTextBtnCompleteOrNext(complete: Boolean): String {
@@ -28,6 +39,16 @@ class StringResourceImpl(private val resource: Resources) : StringResource {
         } else {
             btnNextText
         }
+    }
+
+    override fun getTextTitleResult(countAnswerTrue: Int, commonAnswerTrue: Int): String {
+        return if (countAnswerTrue / commonAnswerTrue >= 0.7) {
+            resultTitleSuccess
+        } else resultTitleFail
+    }
+
+    override fun getResultCountAnswer(countAnswerTrue: Int, commonAnswerTrue: Int): String {
+        return resource.getString(R.string.examResult_countTest)
     }
 
 }

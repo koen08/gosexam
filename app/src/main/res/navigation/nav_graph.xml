@@ -34,5 +34,18 @@
         <argument
             android:name="examUiList"
             app:argType="com.koen.gosexam.presentation.models.ExamUi[]" />
+        <action
+            android:id="@+id/action_examFragment_to_examResultFragment"
+            app:destination="@id/examResultFragment"
+            app:popUpTo="@id/examFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/examResultFragment"
+        android:name="com.koen.gosexam.presentation.exam.result.ExamResultFragment"
+        android:label="ExamResultFragment" >
+        <argument
+            android:name="resultTestUi"
+            app:argType="com.koen.gosexam.presentation.models.ResultTestUi[]" />
     </fragment>
 </navigation>

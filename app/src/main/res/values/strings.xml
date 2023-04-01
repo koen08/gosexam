@@ -17,4 +17,8 @@
     <string name="examList_questionNumber">Вопрос #%s</string>
     <string name="questionDetails_answerFalseText">%d. %s</string>
     <string name="examTest_positionFromCommon">%s из %s</string>
+
+    <string name="examResult_countTest">Вы набрали %s баллов из %s возможных</string>
+    <string name="examResult_successTest">Вы успешно прошли тестирование</string>
+    <string name="examResult_failTest">Вы не справились с тестом</string>
 </resources>
