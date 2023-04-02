@@ -9,4 +9,4 @@ data class OpenDetailsQuestion(val questionUi: QuestionUi) : UiEvent
 
 data class OpenExamTest(val examUiList: List<ExamUi>) : UiEvent
 
-data class OpenResultTest(val resultTest: List<ResultTestUi>) : UiEvent
+data class OpenResultTest(val resultTest: ResultTestUi) : UiEvent

@@ -28,13 +28,24 @@ class DrawableResourceImpl(val context: Context) : DrawableResource {
         }
     }
 
-    override fun getSelectedIsTrueGreen50ElseError50OrGray60(isTrue: Boolean, isSelected: Boolean): Int {
+    override fun getSelectedIsTrueGreen50ElseError50OrGray60(
+        isTrue: Boolean,
+        isSelected: Boolean
+    ): Int {
         return if (isTrue) {
             bgSolidGreen
         } else if (isSelected) {
             bgSolidError50
         } else {
             bgSolidGray60Corners4
+        }
+    }
+
+    override fun getSuccessOrFail(countAnswerTrue: Int, commonAnswerTrue: Int): Int {
+        return if (countAnswerTrue / commonAnswerTrue >= 0.7) {
+            bgSolidGreen
+        } else {
+            bgSolidError50
         }
     }
 }

@@ -14,4 +14,6 @@ interface DrawableResource {
     fun getSelectedIsTrueGreen50ElseGray60(isTrue: Boolean): Int
 
     fun getSelectedIsTrueGreen50ElseError50OrGray60(isTrue: Boolean, isSelected: Boolean): Int
+
+    fun getSuccessOrFail(countAnswerTrue: Int, commonAnswerTrue: Int) : Int
 }

@@ -14,5 +14,7 @@ data class ResultExamUi(
 data class ResultAnswerUi(
     val text: String = "",
     val selected: Boolean = false,
-    val isTrue: Boolean = false
+    val isTrue: Boolean = false,
+    val textColor: Int = 0,
+    val styleText: Int = 0
 ) : Parcelable

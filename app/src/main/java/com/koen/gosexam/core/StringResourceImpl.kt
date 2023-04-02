@@ -48,7 +48,7 @@ class StringResourceImpl(private val resource: Resources) : StringResource {
     }
 
     override fun getResultCountAnswer(countAnswerTrue: Int, commonAnswerTrue: Int): String {
-        return resource.getString(R.string.examResult_countTest)
+        return resource.getString(R.string.examResult_countTest, countAnswerTrue.toString(), commonAnswerTrue.toString())
     }
 
 }

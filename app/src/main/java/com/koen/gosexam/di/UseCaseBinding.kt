@@ -25,4 +25,7 @@ interface UseCaseBinding {
 
     @Binds
     fun bindPrepareAnswerTestUseCase(useCase: PrepareAnswerTestUseCaseImpl) : PrepareAnswerTestUseCase
+
+    @Binds
+    fun bindPrepareResultTestUseCase(useCase: PrepareResultTestUseCaseImpl) : PrepareResultTestUseCase
 }

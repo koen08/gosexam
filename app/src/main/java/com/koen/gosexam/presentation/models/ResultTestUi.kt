@@ -9,5 +9,6 @@ data class ResultTestUi(
     val commonAnswer: Int = 0,
     val textTitleResult : String = "",
     val textDescriptionResult: String = "",
-    val examList: List<ResultExamUi> = emptyList()
+    val examList: List<ResultExamUi> = emptyList(),
+    val backgroundTitle: Int = 0
 ) : Parcelable
