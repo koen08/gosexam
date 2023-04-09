@@ -39,6 +39,9 @@ class ExamViewModel @Inject constructor(
     override val uiState: StateFlow<ExamTestUiState> = _uiState.asStateFlow()
 
     fun updateAnswerList(answerSelected: AnswerTestUi, examSelected: ExamUi) {
+        if (!uiState.value.clickableAnswers) {
+            return
+        }
         viewModelScope.launch {
             val examNewList = withContext(Dispatchers.IO) {
                 prepareAnswerTestUseCase.invoke(
@@ -53,6 +56,7 @@ class ExamViewModel @Inject constructor(
             )
             updateExamUi(examNewList)
             updateBtnText(btnText)
+            updateClickableAnswers(false)
             showButton()
         }
     }
@@ -67,6 +71,7 @@ class ExamViewModel @Inject constructor(
                     currentPosition = state.currentPosition + 1
                 )
             }
+            updateClickableAnswers(true)
             hideButton()
         }
     }
@@ -92,6 +97,14 @@ class ExamViewModel @Inject constructor(
         _uiState.update { state ->
             state.copy(
                 btnText = btnText
+            )
+        }
+    }
+
+    private fun updateClickableAnswers(clickable: Boolean) {
+        _uiState.update { state ->
+            state.copy(
+                clickableAnswers = clickable
             )
         }
     }
