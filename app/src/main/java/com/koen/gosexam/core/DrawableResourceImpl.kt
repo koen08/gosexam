@@ -42,7 +42,8 @@ class DrawableResourceImpl(val context: Context) : DrawableResource {
     }
 
     override fun getSuccessOrFail(countAnswerTrue: Int, commonAnswerTrue: Int): Int {
-        return if (countAnswerTrue / commonAnswerTrue >= 0.7) {
+        val result = countAnswerTrue.toFloat() / commonAnswerTrue.toFloat()
+        return if (result >= 0.7) {
             bgSolidGreen
         } else {
             bgSolidError50

@@ -23,4 +23,12 @@ interface ExamDao {
         "SELECT * FROM exam_table ORDER BY RANDOM() LIMIT :count"
     )
     fun generateExamTest(count : Int) : List<ExamEntity>
+
+    @Query(
+        "SELECT * FROM exam_table WHERE id >= :min AND id <= :max"
+    )
+    fun generateTestByRange(min: Int, max: Int) : List<ExamEntity>
+
+    @Query("DELETE FROM sqlite_sequence WHERE name = 'exam_table'")
+    fun resetAutoincrement()
 }

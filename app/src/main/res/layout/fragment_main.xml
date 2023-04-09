@@ -15,130 +15,37 @@
         app:layout_constraintTop_toTopOf="parent"
         app:title="Создание теста" />
 
-    <TextView
-        android:id="@+id/textView"
-        style="@style/DefaultTitle3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/doubleTab"
+        style="@style/TabLayoutDoubleTab"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="Количество вопросов"
-        android:textColor="@color/gray_100"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/etAmountQuestion"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"
-        android:hint="Количество вопросов"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
-
-        <com.google.android.material.textfield.TextInputEditText
-            style="@style/DefaultBody"
+        <com.google.android.material.tabs.TabItem
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/main_tabFirst" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/main_tabSecond" />
 
-    <com.koen.gosexam.presentation.widget.SelectionButtonMini
-        android:id="@+id/btnMax"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
-        android:text="1049"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etAmountQuestion" />
+    </com.google.android.material.tabs.TabLayout>
 
-    <com.koen.gosexam.presentation.widget.SelectionButtonMini
-        android:id="@+id/btn100"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="100"
-        app:layout_constraintStart_toEndOf="@+id/btnMax"
-        app:layout_constraintTop_toTopOf="@+id/btnMax" />
-
-    <com.koen.gosexam.presentation.widget.SelectionButtonMini
-        android:id="@+id/btn50"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="50"
-        app:layout_constraintStart_toEndOf="@+id/btn100"
-        app:layout_constraintTop_toTopOf="@+id/btnMax" />
-
-    <com.koen.gosexam.presentation.widget.SelectionButtonMini
-        android:id="@+id/btnMin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="16dp"
-        android:text="10"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/btn50"
-        app:layout_constraintTop_toTopOf="@+id/btnMax" />
-
-    <TextView
-        android:id="@+id/tvTitleTypeExam"
-        style="@style/DefaultTitle3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Формат тестирования"
-        android:textColor="@color/gray_100"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnMax" />
-
-    <ImageView
-        android:id="@+id/imgInfoExamType"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="4dp"
-        android:background="@drawable/ic_info"
-        app:layout_constraintBottom_toBottomOf="@+id/tvTitleTypeExam"
-        app:layout_constraintStart_toEndOf="@+id/tvTitleTypeExam"
-        app:layout_constraintTop_toTopOf="@+id/tvTitleTypeExam"
-        tools:ignore="ContentDescription" />
-
-    <com.koen.gosexam.presentation.widget.SelectionButton
-        android:id="@+id/btnSelectionWorkout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"
-        android:text="Тренировка"
-        app:check="true"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vpCreateTest"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnStartExam"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitleTypeExam" />
-
-    <com.koen.gosexam.presentation.widget.SelectionButton
-        android:id="@+id/btnSelectionExam"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"
-        android:text="Экзамен"
-        app:check="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSelectionWorkout" />
+        app:layout_constraintTop_toBottomOf="@+id/doubleTab" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnStartExam"
@@ -152,9 +59,7 @@
         android:textAppearance="@style/CustomButtonL"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSelectionExam"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

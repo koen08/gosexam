@@ -57,6 +57,9 @@ class ExamTestFragment :
             btnNext.setOnClickListener {
                 viewModel.updatePosition()
             }
+            toolbar.setNavigationOnClickListener {
+                findTopNavController().popBackStack()
+            }
         }
     }
 

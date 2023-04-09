@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TabLayoutDoubleTab">
+        <item name="android:layout_height">40dp</item>
+        <item name="android:background">@drawable/bg_solid_gray_blue20_4</item>
+        <item name="tabGravity">fill</item>
+        <item name="tabIndicatorGravity">stretch</item>
+        <item name="tabIndicatorAnimationMode">linear</item>
+        <item name="tabIndicatorAnimationDuration">200</item>
+        <item name="tabSelectedTextColor">@color/white_100</item>
+        <item name="tabTextColor">@color/gray_80</item>
+        <item name="tabMode">fixed</item>
+        <item name="tabTextAppearance">@style/CustomBodyS</item>
+        <item name="tabIndicatorColor">@color/primary_60</item>
+        <item name="tabIndicator">@drawable/bg_solid_primary60_padding_8</item>
+        <item name="tabRippleColor">@null</item>
+    </style>
+
+    <style name="FullScreenLoaderTheme" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">@color/loaderBackground</item>
+    </style>
+
+</resources>

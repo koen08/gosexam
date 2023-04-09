@@ -28,4 +28,10 @@ interface UseCaseBinding {
 
     @Binds
     fun bindPrepareResultTestUseCase(useCase: PrepareResultTestUseCaseImpl) : PrepareResultTestUseCase
+
+    @Binds
+    fun bindGetExamSizeUseCase(useCase: GetExamSizeUseCaseImpl) : GetExamSizeUseCase
+
+    @Binds
+    fun bindGenerateRangeExamUseCase(useCase: GenerateRangeExamUseCaseImpl): GenerateRangeExamUseCase
 }

@@ -42,7 +42,8 @@ class StringResourceImpl(private val resource: Resources) : StringResource {
     }
 
     override fun getTextTitleResult(countAnswerTrue: Int, commonAnswerTrue: Int): String {
-        return if (countAnswerTrue / commonAnswerTrue >= 0.7) {
+        val result = countAnswerTrue.toFloat() / commonAnswerTrue.toFloat()
+        return if (result >= 0.7) {
             resultTitleSuccess
         } else resultTitleFail
     }

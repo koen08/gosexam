@@ -8,4 +8,8 @@ interface ExamRepository {
     suspend fun getExamFromLocal() : List<Exam>
 
     suspend fun generateExam(countQuestion: Int) : List<Exam>
+
+    suspend fun getSizeExam() : Int
+
+    suspend fun getExamByRange(min: Int, max: Int) : List<Exam>
 }

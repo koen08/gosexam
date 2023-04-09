@@ -22,6 +22,7 @@ class ExamRepositoryImpl @Inject constructor(
         val exam = examRemoteDataSource.getExam()
         if (exam.isNotEmpty()) {
             examDao.deleteTable()
+            examDao.resetAutoincrement()
             examDao.insert(exam.mapToEntityList())
         }
     }
@@ -34,6 +35,14 @@ class ExamRepositoryImpl @Inject constructor(
         return examDao.generateExamTest(
             count = countQuestion
         ).mapToDomain()
+    }
+
+    override suspend fun getSizeExam(): Int {
+        return getExamFromLocal().size
+    }
+
+    override suspend fun getExamByRange(min: Int, max: Int): List<Exam> {
+        return examDao.generateTestByRange(min, max).mapToDomain()
     }
 
 }

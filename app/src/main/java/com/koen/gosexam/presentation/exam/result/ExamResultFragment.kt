@@ -10,6 +10,7 @@ import com.koen.gosexam.R
 import com.koen.gosexam.databinding.FragmentExamBinding
 import com.koen.gosexam.databinding.FragmentExamResultBinding
 import com.koen.gosexam.extension.applyStatusBarInsetsOnly
+import com.koen.gosexam.extension.findTopNavController
 import com.koen.gosexam.presentation.base.BaseFragment
 import com.koen.gosexam.presentation.exam.ExamTestUiState
 import com.koen.gosexam.presentation.exam.ExamViewModel
@@ -38,6 +39,9 @@ class ExamResultFragment :
             applyStatusBarInsetsOnly(root)
             tvExams.adapter = adapterResult
             tvExams.layoutManager = LinearLayoutManager(requireContext())
+            toolbar.setNavigationOnClickListener {
+                findTopNavController().popBackStack()
+            }
         }
     }
 

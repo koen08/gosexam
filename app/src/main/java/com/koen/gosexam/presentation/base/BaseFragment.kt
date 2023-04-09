@@ -33,6 +33,7 @@ abstract class BaseFragment<UiStateModel : UiState, ViewModel : BaseViewModel<Ui
         collectUiState()
         collectInfoDialog()
         setUiEventFlowCollect()
+        setUiEventSharedFlowCollect()
     }
 
     override fun onCreateView(
@@ -56,10 +57,21 @@ abstract class BaseFragment<UiStateModel : UiState, ViewModel : BaseViewModel<Ui
         }
     }
 
-    fun setUiEventFlowCollect() {
+    private fun setUiEventFlowCollect() {
         lifecycleScope.launch {
             viewModel
                 .uiEvent
+                .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                .collect {
+                    handleUiEvent(it)
+                }
+        }
+    }
+
+    private fun setUiEventSharedFlowCollect() {
+        lifecycleScope.launch {
+            viewModel
+                .uiEventShared
                 .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
                 .collect {
                     handleUiEvent(it)
