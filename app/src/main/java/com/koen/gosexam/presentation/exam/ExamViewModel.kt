@@ -13,6 +13,7 @@ import com.koen.gosexam.presentation.models.AnswerTestUi
 import com.koen.gosexam.presentation.models.ExamUi
 import com.koen.gosexam.presentation.models.uiEvent.HideButton
 import com.koen.gosexam.presentation.models.uiEvent.OpenResultTest
+import com.koen.gosexam.presentation.models.uiEvent.ShowAds
 import com.koen.gosexam.presentation.models.uiEvent.ShowButton
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -64,7 +65,7 @@ class ExamViewModel @Inject constructor(
     fun updatePosition() {
         val uiState = uiState.value
         if (uiState.currentPosition + 1 >= uiState.examUiList.size) {
-            prepareResult(uiState.examUiList)
+            sendEvent(ShowAds)
         } else {
             _uiState.update { state ->
                 state.copy(
@@ -76,7 +77,7 @@ class ExamViewModel @Inject constructor(
         }
     }
 
-    private fun prepareResult(examUiList: List<ExamUi>) {
+    fun prepareResult(examUiList: List<ExamUi> = uiState.value.examUiList) {
         viewModelScope.launch {
             val resultList = withContext(Dispatchers.IO) {
                 prepareResultTestUseCase(examUiList)

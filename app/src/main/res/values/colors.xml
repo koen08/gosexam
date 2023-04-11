@@ -47,10 +47,12 @@
     <color name="light_blue_80">#71C5E8</color>
 
     <color name="error_50">#F04F4F</color>
+    <color name="error_40">#F1A1A1</color>
     <color name="warning_50">#FF8A20</color>
     <color name="error_20">#FFC0C0</color>
     <color name="warning_10">#FEF0E1</color>
     <color name="success_50">#4BB34B</color>
+    <color name="success_40">#78D678</color>
     <color name="success_10">#EFFFEF</color>
 
     <color name="loaderBackground">#66FFFFFF</color>

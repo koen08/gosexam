@@ -84,4 +84,7 @@ dependencies {
     //adapter delegate
     implementation "com.hannesdorfmann:adapterdelegates4-kotlin-dsl:$adapter_delegate_version"
     implementation "com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:$adapter_delegate_version"
+
+    //yandex ads
+    implementation 'com.yandex.android:mobileads:5.7.0'
 }

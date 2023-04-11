@@ -7,7 +7,7 @@ import android.widget.Button
 import androidx.core.animation.doOnEnd
 import androidx.core.view.isVisible
 
-private const val DURATION_ANIM = 350L
+private const val DURATION_ANIM = 250L
 
 fun Button.showBtn(durationTime: Long = DURATION_ANIM) {
     isVisible = true

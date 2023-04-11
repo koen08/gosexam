@@ -14,3 +14,12 @@ fun String?.toIntOrZero() : Int {
         0
     } else this.toInt()
 }
+
+fun String?.toLongOrZero() : Long {
+    if (this == null) {
+        return 0
+    }
+    return if (!this.isValid()) {
+        0
+    } else this.toLong()
+}

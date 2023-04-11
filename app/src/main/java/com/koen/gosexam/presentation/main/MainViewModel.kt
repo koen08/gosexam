@@ -2,10 +2,12 @@ package com.koen.gosexam.presentation.main
 
 import androidx.lifecycle.viewModelScope
 import com.koen.gosexam.R
+import com.koen.gosexam.core.StringResource
 import com.koen.gosexam.domain.exam.GenerateExamUseCase
 import com.koen.gosexam.domain.exam.GenerateRangeExamUseCase
 import com.koen.gosexam.domain.exam.GetExamSizeUseCase
 import com.koen.gosexam.domain.exam.GetExamUseCase
+import com.koen.gosexam.extension.isValid
 import com.koen.gosexam.extension.toIntOrZero
 import com.koen.gosexam.presentation.base.BaseViewModel
 import com.koen.gosexam.presentation.core.CurrentTab
@@ -29,7 +31,8 @@ class MainViewModel @Inject constructor(
     private val getExamUseCase: GetExamUseCase,
     private val generateExamUseCase: GenerateExamUseCase,
     private val getExamSizeUseCase: GetExamSizeUseCase,
-    private val generateRangeExamUseCase: GenerateRangeExamUseCase
+    private val generateRangeExamUseCase: GenerateRangeExamUseCase,
+    private val stringResource: StringResource
 ) : BaseViewModel<MainUiState>() {
 
     companion object {
@@ -89,8 +92,24 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun generateExam(countQuestion: Int = uiState.value.currentText.toIntOrZero()) {
+    fun generateExam() {
         val currentTab = uiState.value.currentTab
+        if (currentTab.isFirst() && uiState.value.currentText.length >= 4) {
+            try {
+                if (uiState.value.currentText.toIntOrZero() > 1049) {
+                    sendEventShared(ErrorTextInput(stringResource.errorLarge))
+                    return
+                }
+            } catch (e : java.lang.NumberFormatException) {
+                sendEventShared(ErrorTextInput(stringResource.errorLarge))
+                return
+            }
+        }
+        val countQuestion = uiState.value.currentText.toIntOrZero()
+        if (currentTab.isFirst() && countQuestion == 0) {
+            sendEventShared(ErrorTextInput(stringResource.errorEmptyTextInput))
+            return
+        }
         if (currentTab.isFirst()) {
             viewModelScope.launch {
                 val result = generateExamUseCase(countQuestion)
@@ -132,21 +151,26 @@ class MainViewModel @Inject constructor(
     }
 
     fun updateRangeAndSendEvent(
-        startRange: Int = uiState.value.startRange,
-        endRange: Int = uiState.value.endRange
+        startRange: String = uiState.value.startRange.toString(),
+        endRange: String = uiState.value.endRange.toString()
     ) {
-        var startRangeMutable = startRange
-        var endRangeMutable = endRange
-        if (startRange == uiState.value.startRange && endRange == uiState.value.endRange) {
+        if (!startRange.isValid() || !endRange.isValid()) {
             return
         }
-        if (startRange > uiState.value.examSize) {
+        val startRangeInt = startRange.toInt()
+        val endRangeInt = endRange.toInt()
+        var startRangeMutable = startRangeInt
+        var endRangeMutable = endRangeInt
+        if (startRangeInt == uiState.value.startRange && endRangeInt == uiState.value.endRange) {
+            return
+        }
+        if (startRangeInt > uiState.value.examSize) {
             startRangeMutable = uiState.value.examSize
         }
-        if (endRange < startRangeMutable) {
+        if (endRangeInt < startRangeMutable) {
             endRangeMutable = uiState.value.examSize
         }
-        if (endRange > uiState.value.examSize) {
+        if (endRangeInt > uiState.value.examSize) {
             endRangeMutable = uiState.value.examSize
         }
         if (startRangeMutable > 0 && endRangeMutable <= uiState.value.examSize) {
@@ -154,7 +178,7 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun sendEventRangeSlider(size : Int = uiState.value.examSize) {
+    fun sendEventRangeSlider(size: Int = uiState.value.examSize) {
         if (size > 1) {
             sendEventShared(RangeSliderInit(min = MIN_VALUE_SLIDER, max = size))
         }

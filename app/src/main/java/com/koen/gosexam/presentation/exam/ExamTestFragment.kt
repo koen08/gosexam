@@ -1,15 +1,11 @@
 package com.koen.gosexam.presentation.exam
 
-import android.animation.Animator
-import android.animation.Animator.AnimatorListener
-import android.animation.ObjectAnimator
-import android.animation.PropertyValuesHolder
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import androidx.core.animation.doOnEnd
+import android.widget.Toast
 import androidx.core.os.bundleOf
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.koen.gosexam.R
@@ -23,7 +19,14 @@ import com.koen.gosexam.presentation.exam.result.ExamResultFragment.Companion.AR
 import com.koen.gosexam.presentation.models.base.UiEvent
 import com.koen.gosexam.presentation.models.uiEvent.HideButton
 import com.koen.gosexam.presentation.models.uiEvent.OpenResultTest
+import com.koen.gosexam.presentation.models.uiEvent.ShowAds
 import com.koen.gosexam.presentation.models.uiEvent.ShowButton
+import com.yandex.mobile.ads.common.AdRequest
+import com.yandex.mobile.ads.common.AdRequestError
+import com.yandex.mobile.ads.common.ImpressionData
+import com.yandex.mobile.ads.rewarded.Reward
+import com.yandex.mobile.ads.rewarded.RewardedAd
+import com.yandex.mobile.ads.rewarded.RewardedAdEventListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -52,10 +55,14 @@ class ExamTestFragment :
             applyStatusBarInsetsOnly(root)
             vpExam.apply {
                 adapter = adapterExam
-                isUserInputEnabled = false
             }
+            var lastClickTime: Long = 0
             btnNext.setOnClickListener {
-                viewModel.updatePosition()
+                val currentTime = System.currentTimeMillis()
+                if (currentTime - lastClickTime > 500) {
+                    viewModel.updatePosition()
+                    lastClickTime = currentTime
+                }
             }
             toolbar.setNavigationOnClickListener {
                 findTopNavController().popBackStack()
@@ -88,6 +95,42 @@ class ExamTestFragment :
                         ARG_KEY_RESULT_UI to uiEvent.resultTest
                     )
                 )
+            }
+            is ShowAds -> {
+                Toast.makeText(requireContext(), "Загрузка рекламы", Toast.LENGTH_SHORT).show()
+                val mRewardedAd = RewardedAd(requireContext());
+                //demo - demo-rewarded-yandex //release - R-M-2317669-1
+                mRewardedAd.setAdUnitId("demo-rewarded-yandex");
+                val adRequest: AdRequest = AdRequest.Builder().build()
+                mRewardedAd.setRewardedAdEventListener(object : RewardedAdEventListener {
+                    override fun onAdLoaded() {
+                        Log.e("YANDEX:ADS:", "Show completed: onAdLoaded")
+                        mRewardedAd.show()
+                    }
+
+                    override fun onAdFailedToLoad(error: AdRequestError) {
+                        Log.e("YANDEX:ADS:", "Failed process load ads : ${error.description}")
+                        viewModel.prepareResult()
+                    }
+
+                    override fun onAdShown() = Unit
+
+                    override fun onAdDismissed() = Unit
+
+                    override fun onAdClicked() = Unit
+
+                    override fun onLeftApplication() = Unit
+
+                    override fun onReturnedToApplication() = Unit
+
+                    override fun onImpression(p0: ImpressionData?) = Unit
+
+                    override fun onRewarded(p0: Reward) {
+                        viewModel.prepareResult()
+                    }
+
+                })
+                mRewardedAd.loadAd(adRequest);
             }
         }
     }

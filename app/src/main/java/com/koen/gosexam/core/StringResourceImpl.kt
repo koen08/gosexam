@@ -17,7 +17,13 @@ class StringResourceImpl(private val resource: Resources) : StringResource {
     override val resultTitleSuccess: String
         get() = resource.getString(R.string.examResult_successTest)
 
-    override fun getNumberQuestion(number: String): String {
+    override val errorEmptyTextInput: String
+        get() = resource.getString(R.string.common_emptyError)
+
+    override val errorLarge: String
+        get() = resource.getString(R.string.common_errorLarge)
+
+            override fun getNumberQuestion(number: String): String {
         return resource.getString(R.string.examList_questionNumber, number)
     }
 
@@ -49,7 +55,11 @@ class StringResourceImpl(private val resource: Resources) : StringResource {
     }
 
     override fun getResultCountAnswer(countAnswerTrue: Int, commonAnswerTrue: Int): String {
-        return resource.getString(R.string.examResult_countTest, countAnswerTrue.toString(), commonAnswerTrue.toString())
+        return resource.getString(
+            R.string.examResult_countTest,
+            countAnswerTrue.toString(),
+            commonAnswerTrue.toString()
+        )
     }
 
 }

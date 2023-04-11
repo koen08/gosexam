@@ -15,6 +15,7 @@ import com.koen.gosexam.extension.findTopNavController
 import com.koen.gosexam.presentation.base.BaseFragment
 import com.koen.gosexam.presentation.exam.ExamTestFragment
 import com.koen.gosexam.presentation.models.base.UiEvent
+import com.koen.gosexam.presentation.models.uiEvent.ErrorTextInput
 import com.koen.gosexam.presentation.models.uiEvent.OpenExamTest
 import com.koen.gosexam.presentation.widget.SelectionButtonMini
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,6 +38,7 @@ class CountQuestionFragment : BaseFragment<MainUiState, MainViewModel, FragmentC
 
         override fun onTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
             val buttonHelpers = ButtonHelpers.getButtonHelpers(text.toString())
+            binding.etAmountQuestion.error = ""
             viewModel.changeButtonHelpersChangeText(buttonHelpers, text.toString())
         }
 
@@ -88,6 +90,13 @@ class CountQuestionFragment : BaseFragment<MainUiState, MainViewModel, FragmentC
         binding.etAmountQuestion.editText?.setText(uiState.currentText)
         val text = binding.etAmountQuestion.editText?.text.toString().length
         binding.etAmountQuestion.editText?.setSelection(text)
+    }
+
+    override fun handleUiEvent(uiEvent: UiEvent) {
+        super.handleUiEvent(uiEvent)
+        if (uiEvent is ErrorTextInput) {
+            binding.etAmountQuestion.error = uiEvent.error
+        }
     }
 
     private fun setCheckHelpersButton(buttonHelpers: ButtonHelpers?) {

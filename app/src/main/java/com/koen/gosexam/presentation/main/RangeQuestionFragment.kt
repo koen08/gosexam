@@ -53,13 +53,13 @@ class RangeQuestionFragment :
 
             etStart.editText?.doAfterTextChanged {
                 viewModel.updateRangeAndSendEvent(
-                    startRange = it.toString().toInt()
+                    startRange = it.toString()
                 )
             }
 
             etFinish.editText?.doAfterTextChanged {
                 viewModel.updateRangeAndSendEvent(
-                    endRange = it.toString().toInt()
+                    endRange = it.toString()
                 )
             }
         }
@@ -70,6 +70,8 @@ class RangeQuestionFragment :
         binding.run {
             etStart.editText?.setText(uiState.startRange.toString())
             etFinish.editText?.setText(uiState.endRange.toString())
+            etStart.editText?.setSelection(etStart.editText?.length().orZero)
+            etFinish.editText?.setSelection(etFinish.editText?.length().orZero)
         }
     }
 
