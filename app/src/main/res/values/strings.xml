@@ -23,6 +23,6 @@
     <string name="examResult_countTest">Вы набрали %s баллов из %s возможных</string>
     <string name="examResult_successTest">Вы успешно прошли тестирование</string>
     <string name="examResult_failTest">Вы не справились с тестом</string>
-    <string name="common_emptyError">Поле не может быть пустым или равнятся нулю</string>
+    <string name="common_emptyError">Поле не может быть пустым или равняться нулю</string>
     <string name="common_errorLarge">Превышено максимальное значение 1049</string>
 </resources>
