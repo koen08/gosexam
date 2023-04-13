@@ -100,7 +100,7 @@ class ExamTestFragment :
                 Toast.makeText(requireContext(), "Загрузка рекламы", Toast.LENGTH_SHORT).show()
                 val mRewardedAd = RewardedAd(requireContext());
                 //demo - demo-rewarded-yandex //release - R-M-2317669-1
-                mRewardedAd.setAdUnitId("demo-rewarded-yandex");
+                mRewardedAd.setAdUnitId("R-M-2317669-1");
                 val adRequest: AdRequest = AdRequest.Builder().build()
                 mRewardedAd.setRewardedAdEventListener(object : RewardedAdEventListener {
                     override fun onAdLoaded() {
