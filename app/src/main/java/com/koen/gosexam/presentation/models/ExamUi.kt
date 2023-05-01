@@ -42,16 +42,23 @@ fun ExamUi.mapToExamResultList(
     return ResultExamUi(
         id = id,
         question = question,
-        resultAnswerList = answers.map { it.mapToResultTestUi(colorResource, styleResource) }
+        resultAnswerList = answers.mapIndexed { index, item ->
+            item.mapToResultTestUi(
+                colorResource,
+                styleResource,
+                index + 1
+            )
+        }
     )
 }
 
 fun AnswerTestUi.mapToResultTestUi(
     colorResource: ColorResource,
     styleResource: StyleResource,
+    index: Int
 ): ResultAnswerUi {
     return ResultAnswerUi(
-        text = text,
+        text = "$index. $text",
         selected = selected,
         isTrue = isTrue,
         textColor = colorResource.getSuccessOrFailOrDefault(isTrue, selected),
