@@ -17,6 +17,7 @@ import com.koen.gosexam.presentation.models.uiEvent.ShowAds
 import com.koen.gosexam.presentation.models.uiEvent.ShowButton
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -74,6 +75,13 @@ class ExamViewModel @Inject constructor(
             }
             updateClickableAnswers(true)
             hideButton()
+        }
+    }
+
+    fun sendShowAds() {
+        viewModelScope.launch {
+            delay(2000)
+            sendEvent(ShowAds)
         }
     }
 

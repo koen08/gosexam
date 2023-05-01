@@ -49,6 +49,8 @@ class ExamTestFragment :
         return FragmentExamBinding.inflate(inflater)
     }
 
+    var mRewardedAd : RewardedAd? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.run {
@@ -69,6 +71,39 @@ class ExamTestFragment :
                 findTopNavController().popBackStack()
             }
         }
+        mRewardedAd = RewardedAd(requireContext());
+        mRewardedAd?.setAdUnitId("demo-rewarded-yandex");
+        val adRequest: AdRequest = AdRequest.Builder().build()
+        //demo - demo-rewarded-yandex //release - R-M-2317669-1
+        mRewardedAd?.setRewardedAdEventListener(object : RewardedAdEventListener {
+            override fun onAdLoaded() {
+                Log.e("YANDEX:ADS:", "Show completed: onAdLoaded")
+
+            }
+
+            override fun onAdFailedToLoad(error: AdRequestError) {
+                Log.e("YANDEX:ADS:", "Failed process load ads : ${error.description}")
+                viewModel.prepareResult()
+            }
+
+            override fun onAdShown() = Unit
+
+            override fun onAdDismissed() = Unit
+
+            override fun onAdClicked() = Unit
+
+            override fun onLeftApplication() = Unit
+
+            override fun onReturnedToApplication() = Unit
+
+            override fun onImpression(p0: ImpressionData?) = Unit
+
+            override fun onRewarded(p0: Reward) {
+                viewModel.prepareResult()
+            }
+
+        })
+        mRewardedAd?.loadAd(adRequest);
     }
 
     override fun handleUiState(uiState: ExamTestUiState) {
@@ -99,39 +134,9 @@ class ExamTestFragment :
             }
             is ShowAds -> {
                 Toast.makeText(requireContext(), "Загрузка рекламы", Toast.LENGTH_SHORT).show()
-                val mRewardedAd = RewardedAd(requireContext());
-                //demo - demo-rewarded-yandex //release - R-M-2317669-1
-                mRewardedAd.setAdUnitId("R-M-2317669-1");
-                val adRequest: AdRequest = AdRequest.Builder().build()
-                mRewardedAd.setRewardedAdEventListener(object : RewardedAdEventListener {
-                    override fun onAdLoaded() {
-                        Log.e("YANDEX:ADS:", "Show completed: onAdLoaded")
-                        mRewardedAd.show()
-                    }
-
-                    override fun onAdFailedToLoad(error: AdRequestError) {
-                        Log.e("YANDEX:ADS:", "Failed process load ads : ${error.description}")
-                        viewModel.prepareResult()
-                    }
-
-                    override fun onAdShown() = Unit
-
-                    override fun onAdDismissed() = Unit
-
-                    override fun onAdClicked() = Unit
-
-                    override fun onLeftApplication() = Unit
-
-                    override fun onReturnedToApplication() = Unit
-
-                    override fun onImpression(p0: ImpressionData?) = Unit
-
-                    override fun onRewarded(p0: Reward) {
-                        viewModel.prepareResult()
-                    }
-
-                })
-                mRewardedAd.loadAd(adRequest);
+                if (mRewardedAd?.isLoaded == true) {
+                    mRewardedAd?.show()
+                } else viewModel.sendShowAds()
             }
         }
     }
