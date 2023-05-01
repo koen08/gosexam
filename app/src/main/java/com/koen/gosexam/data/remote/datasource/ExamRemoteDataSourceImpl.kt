@@ -25,7 +25,7 @@ class ExamRemoteDataSourceImpl @Inject constructor() : ExamRemoteDataSource {
                 val buffer = mutableListOf<String>()
                 inputStream.readLines().forEachIndexed { index, line ->
                     if (line == "EXIT") return@forEachIndexed
-                    if (line != "!") {
+                    if (line.trim() != "!") {
                         buffer.add(line)
                     } else {
                         examDtoList.add(
