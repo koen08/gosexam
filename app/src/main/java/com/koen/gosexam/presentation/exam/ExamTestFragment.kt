@@ -55,6 +55,7 @@ class ExamTestFragment :
             applyStatusBarInsetsOnly(root)
             vpExam.apply {
                 adapter = adapterExam
+                isUserInputEnabled = false
             }
             var lastClickTime: Long = 0
             btnNext.setOnClickListener {

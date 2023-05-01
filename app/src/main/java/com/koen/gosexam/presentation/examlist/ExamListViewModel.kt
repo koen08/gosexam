@@ -17,7 +17,7 @@ import javax.inject.Inject
 class ExamListViewModel @Inject constructor(
     private val getExamListUseCase: GetExamListUseCase
 ) : BaseViewModel<ExamListUiState>() {
-    override val _uiState: MutableStateFlow<ExamListUiState> = MutableStateFlow(ExamListUiState())
+    override val _uiState = MutableStateFlow(ExamListUiState())
     override val uiState: StateFlow<ExamListUiState> = _uiState.asStateFlow()
 
     init {
