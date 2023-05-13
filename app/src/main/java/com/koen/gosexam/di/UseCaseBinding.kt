@@ -12,26 +12,32 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 interface UseCaseBinding {
     @Binds
-    fun bindInitExamUseCase(useCase: GetExamUseCaseImpl) : GetExamUseCase
+    fun bindInitExamUseCase(useCase: GetExamUseCaseImpl): GetExamUseCase
 
     @Binds
-    fun bindGetExamListUseCase(useCase: GetExamListUseCaseImpl) : GetExamListUseCase
+    fun bindGetExamListUseCase(useCase: GetExamListUseCaseImpl): GetExamListUseCase
 
     @Binds
-    fun bindPrepareFalseAnswerUseCase(userCase: PrepareFalseAnswerUseCaseImpl) : PrepareFalseAnswerUseCase
+    fun bindPrepareFalseAnswerUseCase(userCase: PrepareFalseAnswerUseCaseImpl): PrepareFalseAnswerUseCase
 
     @Binds
-    fun bindGenerateExamUseCase(useCase : GenerateExamUseCaseImpl) : GenerateExamUseCase
+    fun bindGenerateExamUseCase(useCase: GenerateExamUseCaseImpl): GenerateExamUseCase
 
     @Binds
-    fun bindPrepareAnswerTestUseCase(useCase: PrepareAnswerTestUseCaseImpl) : PrepareAnswerTestUseCase
+    fun bindPrepareAnswerTestUseCase(useCase: PrepareAnswerTestUseCaseImpl): PrepareAnswerTestUseCase
 
     @Binds
-    fun bindPrepareResultTestUseCase(useCase: PrepareResultTestUseCaseImpl) : PrepareResultTestUseCase
+    fun bindPrepareResultTestUseCase(useCase: PrepareResultTestUseCaseImpl): PrepareResultTestUseCase
 
     @Binds
-    fun bindGetExamSizeUseCase(useCase: GetExamSizeUseCaseImpl) : GetExamSizeUseCase
+    fun bindGetExamSizeUseCase(useCase: GetExamSizeUseCaseImpl): GetExamSizeUseCase
 
     @Binds
     fun bindGenerateRangeExamUseCase(useCase: GenerateRangeExamUseCaseImpl): GenerateRangeExamUseCase
+
+    @Binds
+    fun bindSaveTypeFaculty(useCase: SaveTypeFacultyImpl): SaveTypeFaculty
+
+    @Binds
+    fun bindGetTypeFaculty(useCase: GetTypeFacultyImpl): GetTypeFaculty
 }

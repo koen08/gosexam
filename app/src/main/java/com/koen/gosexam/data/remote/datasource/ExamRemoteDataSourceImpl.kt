@@ -15,11 +15,11 @@ class ExamRemoteDataSourceImpl @Inject constructor() : ExamRemoteDataSource {
         private const val INDEX_QUESTION = 0
     }
 
-    override suspend fun getExam(): List<ExamDto> {
+    override suspend fun getExam(fileName: String): List<ExamDto> {
         val examDtoList = mutableListOf<ExamDto>()
         return suspendCancellableCoroutine { continuation ->
             val storageRef = FirebaseStorage.getInstance().reference
-            val child = storageRef.child("exam.txt")
+            val child = storageRef.child(fileName)
             child.getStream { state, stream ->
                 val inputStream = InputStreamReader(stream)
                 val buffer = mutableListOf<String>()
