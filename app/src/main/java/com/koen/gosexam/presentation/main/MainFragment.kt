@@ -1,8 +1,10 @@
 package com.koen.gosexam.presentation.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
@@ -21,7 +23,14 @@ import com.koen.gosexam.presentation.models.uiEvent.DismissLoading
 import com.koen.gosexam.presentation.models.uiEvent.Loading
 import com.koen.gosexam.presentation.models.uiEvent.OpenExamTest
 import com.koen.gosexam.presentation.models.uiEvent.OpenSelectionFaculty
+import com.koen.gosexam.presentation.models.uiEvent.ShowAds
 import com.koen.gosexam.presentation.start.SelectionFacultyFragment.Companion.REQUEST_KEY_SELECTION_FINISH
+import com.yandex.mobile.ads.common.AdRequest
+import com.yandex.mobile.ads.common.AdRequestError
+import com.yandex.mobile.ads.common.ImpressionData
+import com.yandex.mobile.ads.rewarded.Reward
+import com.yandex.mobile.ads.rewarded.RewardedAd
+import com.yandex.mobile.ads.rewarded.RewardedAdEventListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -47,10 +56,13 @@ class MainFragment :
 
     private var loadingDialog: FullScreenLoaderDialog? = null
 
+    var mRewardedAd : RewardedAd? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         changeSoftInput(false)
         binding.run {
+            //reward()
             btnStartExam.setOnClickListener {
                 viewModel.updateRangeAndSendEvent(
                     viewModel.textStartRange, viewModel.testEndRange
@@ -70,6 +82,44 @@ class MainFragment :
         }
         selectionSetFragmentResultListener()
         viewModel.checkIsFirstApp()
+    }
+
+    private fun reward() {
+        mRewardedAd = RewardedAd(requireContext());
+        mRewardedAd?.setAdUnitId("demo-rewarded-yandex");
+        val adRequest: AdRequest = AdRequest.Builder().build()
+        //demo - demo-rewarded-yandex //release - R-M-2317669-1
+        mRewardedAd?.setRewardedAdEventListener(object : RewardedAdEventListener {
+            override fun onAdLoaded() {
+                Log.e("YANDEX:ADS:", "Show completed: onAdLoaded")
+
+            }
+
+            override fun onAdFailedToLoad(error: AdRequestError) {
+                Log.e("YANDEX:ADS:", "Failed process load ads : ${error.description}")
+                viewModel.generateExam()
+            }
+
+            override fun onAdShown() = Unit
+
+            override fun onAdDismissed() {
+                viewModel.generateExam()
+            }
+
+            override fun onAdClicked() = Unit
+
+            override fun onLeftApplication() = Unit
+
+            override fun onReturnedToApplication() = Unit
+
+            override fun onImpression(p0: ImpressionData?) = Unit
+
+            override fun onRewarded(p0: Reward) {
+                viewModel.generateExam()
+            }
+
+        })
+        mRewardedAd?.loadAd(adRequest);
     }
 
     override fun handleUiState(uiState: MainUiState) {
@@ -105,6 +155,12 @@ class MainFragment :
                 findTopNavController().navigate(
                     R.id.action_homeFragment_to_selectionFacultyFragment
                 )
+            }
+            is ShowAds -> {
+                Toast.makeText(requireContext(), "Загрузка рекламы", Toast.LENGTH_SHORT).show()
+                if (mRewardedAd?.isLoaded == true) {
+                    mRewardedAd?.show()
+                } else viewModel.sendShowAds()
             }
         }
     }

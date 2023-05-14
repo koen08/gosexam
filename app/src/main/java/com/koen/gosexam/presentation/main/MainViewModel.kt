@@ -1,5 +1,6 @@
 package com.koen.gosexam.presentation.main
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.koen.gosexam.R
 import com.koen.gosexam.core.StringResource
@@ -21,6 +22,7 @@ import com.koen.gosexam.presentation.dialog.info.InfoDialogModel
 import com.koen.gosexam.presentation.models.uiEvent.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,6 +30,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.Random
 import javax.inject.Inject
 
 @HiltViewModel
@@ -223,6 +226,23 @@ class MainViewModel @Inject constructor(
             getExamUseCase().run {
                 sendEventShared(DismissLoading)
             }
+        }
+    }
+
+    fun showAdsOrGenerateTest() {
+        val random = Random()
+        val nextInt = random.nextInt(100)
+        if (nextInt < 25) {
+            sendEventShared(ShowAds)
+        } else {
+            generateExam()
+        }
+    }
+
+    fun sendShowAds() {
+        viewModelScope.launch {
+            delay(2000)
+            sendEventShared(ShowAds)
         }
     }
 
