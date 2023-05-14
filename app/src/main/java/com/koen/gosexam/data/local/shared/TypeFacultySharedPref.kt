@@ -18,7 +18,6 @@ class TypeFacultySharedPref @Inject constructor(
             putString(KEY, obj)
             apply()
         }
-
     }
 
     override fun clear() {
@@ -32,9 +31,9 @@ class TypeFacultySharedPref @Inject constructor(
     override fun get(): String {
         return if (sharedPreferences.contains(KEY)) {
             sharedPreferences.getString(KEY, TypeFaculty.MEDICAL.nameValue)
-                ?: TypeFaculty.MEDICAL.nameValue
+                ?: TypeFaculty.NONE.nameValue
         } else {
-            TypeFaculty.MEDICAL.nameValue
+            TypeFaculty.NONE.nameValue
         }
     }
 

@@ -3,6 +3,10 @@ package com.koen.gosexam.di
 import com.koen.gosexam.domain.exam.*
 import com.koen.gosexam.domain.question.PrepareFalseAnswerUseCase
 import com.koen.gosexam.domain.question.PrepareFalseAnswerUseCaseImpl
+import com.koen.gosexam.domain.start.GetStartFirstAppUseCase
+import com.koen.gosexam.domain.start.GetStartFirstAppUseCaseImpl
+import com.koen.gosexam.domain.start.SaveStartFirstAppUseCase
+import com.koen.gosexam.domain.start.SaveStartFirstAppUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -44,5 +48,11 @@ interface UseCaseBinding {
 
     @Singleton
     @Binds
-    fun bindGetSizeExamFlowUseCase(useCase: GetSizeExamFlowUseCaseImpl) : GetSizeExamFlowUseCase
+    fun bindGetSizeExamFlowUseCase(useCase: GetSizeExamFlowUseCaseImpl): GetSizeExamFlowUseCase
+
+    @Binds
+    fun bindGetStartFirstAppUseCase(useCase: GetStartFirstAppUseCaseImpl): GetStartFirstAppUseCase
+
+    @Binds
+    fun bindSaveStartFirstAppUseCase(useCase: SaveStartFirstAppUseCaseImpl): SaveStartFirstAppUseCase
 }

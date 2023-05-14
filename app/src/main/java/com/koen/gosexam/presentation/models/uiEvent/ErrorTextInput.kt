@@ -6,3 +6,7 @@ import com.koen.gosexam.presentation.models.base.UiEvent
 data class ErrorTextInput(
     val error: String
 ) : UiEvent
+
+data class ErrorUiEvent(
+    val errorText: String
+) : UiEvent

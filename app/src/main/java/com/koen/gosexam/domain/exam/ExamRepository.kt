@@ -20,4 +20,8 @@ interface ExamRepository {
     suspend fun getTypeFaculty() : TypeFaculty
 
     fun getExamSizeFlow() : Flow<Int>
+
+    suspend fun getIsStartFirstApp() : Boolean
+
+    suspend fun saveIsStartFirstApp()
 }

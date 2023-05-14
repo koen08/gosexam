@@ -9,3 +9,5 @@ data class RangeSliderValues(val min: Int, val max: Int) : UiEvent
 object Loading : UiEvent
 
 object DismissLoading: UiEvent
+
+object Finish: UiEvent

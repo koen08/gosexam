@@ -23,7 +23,10 @@ class StringResourceImpl(private val resource: Resources) : StringResource {
     override val errorLarge: String
         get() = resource.getString(R.string.common_errorLarge)
 
-            override fun getNumberQuestion(number: String): String {
+    override val errorTextFacultySelection: String
+        get() = resource.getString(R.string.error_facultySelection)
+
+    override fun getNumberQuestion(number: String): String {
         return resource.getString(R.string.examList_questionNumber, number)
     }
 

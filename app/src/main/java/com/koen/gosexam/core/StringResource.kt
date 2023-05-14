@@ -12,6 +12,9 @@ interface StringResource {
     val errorEmptyTextInput: String
 
     val errorLarge: String
+
+    val errorTextFacultySelection: String
+
     fun getNumberQuestion(number: String): String
 
     fun answerFalseText(answer: String, index: Int): String

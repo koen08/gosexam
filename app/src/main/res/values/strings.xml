@@ -26,5 +26,7 @@
     <string name="common_emptyError">Поле не может быть пустым или равняться нулю</string>
     <string name="common_errorLarge">Превышено максимальное значение 1049</string>
 
+    <string name="error_facultySelection">Необходимо выбрать хотя бы один факультет</string>
+
     <string name="main_tvInfoText">В зависимости от введеного числа будет сгенерирован тест со случайными вопросами в разном порядке (с документа для подготовки к ГИА) \n\nМаксимальное количество вопроcов: %s</string>
 </resources>

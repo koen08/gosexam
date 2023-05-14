@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayout
 import com.koen.gosexam.R
@@ -19,6 +20,8 @@ import com.koen.gosexam.presentation.models.base.UiEvent
 import com.koen.gosexam.presentation.models.uiEvent.DismissLoading
 import com.koen.gosexam.presentation.models.uiEvent.Loading
 import com.koen.gosexam.presentation.models.uiEvent.OpenExamTest
+import com.koen.gosexam.presentation.models.uiEvent.OpenSelectionFaculty
+import com.koen.gosexam.presentation.start.SelectionFacultyFragment.Companion.REQUEST_KEY_SELECTION_FINISH
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -42,7 +45,7 @@ class MainFragment :
         override fun onTabReselected(tab: TabLayout.Tab?) = Unit
     }
 
-    private var loadingDialog : FullScreenLoaderDialog? = null
+    private var loadingDialog: FullScreenLoaderDialog? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -65,6 +68,8 @@ class MainFragment :
             doubleTab.getTabAt(viewModel.uiState.value.currentTab.ordinal)?.select()
             vpCreateTest.setCurrentItem(viewModel.uiState.value.currentTab.ordinal, false)
         }
+        selectionSetFragmentResultListener()
+        viewModel.checkIsFirstApp()
     }
 
     override fun handleUiState(uiState: MainUiState) {
@@ -84,14 +89,22 @@ class MainFragment :
                     )
                 )
             }
+
             is Loading -> {
                 loadingDialog = FullScreenLoaderDialog.Builder(requireContext()).run {
                     setTitleText("Загрузка")
                     show()
                 }
             }
+
             is DismissLoading -> {
                 clearLoadingDialog()
+            }
+
+            is OpenSelectionFaculty -> {
+                findTopNavController().navigate(
+                    R.id.action_homeFragment_to_selectionFacultyFragment
+                )
             }
         }
     }
@@ -99,5 +112,10 @@ class MainFragment :
     private fun clearLoadingDialog() {
         loadingDialog?.dismiss()
         loadingDialog = null
+    }
+
+    private fun selectionSetFragmentResultListener() {
+        requireActivity().supportFragmentManager.setFragmentResultListener(REQUEST_KEY_SELECTION_FINISH, viewLifecycleOwner) { _, _ ->
+        }
     }
 }

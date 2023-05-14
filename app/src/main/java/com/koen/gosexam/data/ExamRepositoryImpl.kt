@@ -5,6 +5,8 @@ import com.google.firebase.storage.FirebaseStorage
 import com.koen.gosexam.data.local.entity.mapToDomain
 import com.koen.gosexam.data.local.exams.ExamDao
 import com.koen.gosexam.data.local.shared.SharedPrefString
+import com.koen.gosexam.data.local.shared.StartFirstAppSharedPref
+import com.koen.gosexam.data.local.shared.TypeFacultySharedPref
 import com.koen.gosexam.data.remote.datasource.ExamRemoteDataSource
 import com.koen.gosexam.data.remote.dto.mapToEntityList
 import com.koen.gosexam.domain.exam.ExamRepository
@@ -22,7 +24,8 @@ import javax.inject.Inject
 class ExamRepositoryImpl @Inject constructor(
     private val examRemoteDataSource: ExamRemoteDataSource,
     private val examDao: ExamDao,
-    private val sharedPrefString: SharedPrefString
+    private val sharedPrefString: SharedPrefString,
+    private val startFirstAppSharedPref: StartFirstAppSharedPref
 ) : ExamRepository {
 
     companion object {
@@ -34,6 +37,7 @@ class ExamRepositoryImpl @Inject constructor(
 
     override suspend fun getExam() {
         val type = sharedPrefString.get()
+        if (type == TypeFaculty.NONE.nameValue) return
         val fileName = if (type == TypeFaculty.MEDICAL.nameValue) {
             fileNameMedical
         } else fileNamePediator
@@ -69,14 +73,27 @@ class ExamRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getTypeFaculty(): TypeFaculty {
-        val type = sharedPrefString.get()
-        return if (type == TypeFaculty.MEDICAL.nameValue) {
-            TypeFaculty.MEDICAL
-        } else TypeFaculty.PEDIATOR
+        return when (sharedPrefString.get()) {
+            TypeFaculty.MEDICAL.nameValue -> {
+                TypeFaculty.MEDICAL
+            }
+            TypeFaculty.PEDIATOR.nameValue -> {
+                TypeFaculty.PEDIATOR
+            }
+            else -> TypeFaculty.NONE
+        }
     }
 
     override fun getExamSizeFlow(): Flow<Int> {
         return examSizeMutableStateFlow
+    }
+
+    override suspend fun getIsStartFirstApp(): Boolean {
+        return startFirstAppSharedPref.get()
+    }
+
+    override suspend fun saveIsStartFirstApp() {
+        startFirstAppSharedPref.save(false)
     }
 
 }

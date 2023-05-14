@@ -26,6 +26,11 @@
             app:enterAnim="@android:anim/fade_in"
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_homeFragment_to_selectionFacultyFragment"
+            app:destination="@id/selectionFacultyFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/examFragment"
@@ -47,5 +52,15 @@
         <argument
             android:name="resultTestUi"
             app:argType="com.koen.gosexam.presentation.models.ResultTestUi[]" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectionFacultyFragment"
+        android:name="com.koen.gosexam.presentation.start.SelectionFacultyFragment"
+        android:label="SelectionFacultyFragment" >
+        <action
+            android:id="@+id/action_selectionFacultyFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/selectionFacultyFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

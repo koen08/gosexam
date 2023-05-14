@@ -8,6 +8,8 @@ import com.koen.gosexam.domain.exam.GenerateRangeExamUseCase
 import com.koen.gosexam.domain.exam.GetExamSizeUseCase
 import com.koen.gosexam.domain.exam.GetExamUseCase
 import com.koen.gosexam.domain.exam.GetSizeExamFlowUseCase
+import com.koen.gosexam.domain.start.GetStartFirstAppUseCase
+import com.koen.gosexam.domain.start.SaveStartFirstAppUseCase
 import com.koen.gosexam.extension.isValid
 import com.koen.gosexam.extension.toIntOrZero
 import com.koen.gosexam.presentation.base.BaseViewModel
@@ -35,7 +37,9 @@ class MainViewModel @Inject constructor(
     private val getExamSizeUseCase: GetExamSizeUseCase,
     private val generateRangeExamUseCase: GenerateRangeExamUseCase,
     private val stringResource: StringResource,
-    private val getSizeExamFlow: GetSizeExamFlowUseCase
+    private val getSizeExamFlow: GetSizeExamFlowUseCase,
+    private val getStartFirstAppUseCase: GetStartFirstAppUseCase,
+    private val saveStartFirstAppUseCase: SaveStartFirstAppUseCase
 ) : BaseViewModel<MainUiState>() {
 
     companion object {
@@ -204,7 +208,16 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    private fun initExam() {
+    fun checkIsFirstApp() {
+        viewModelScope.launch {
+            val isFirstStartApp = getStartFirstAppUseCase()
+            if (isFirstStartApp) {
+                sendEventShared(OpenSelectionFaculty)
+            }
+        }
+    }
+
+    fun initExam() {
         viewModelScope.launch {
             sendEventShared(Loading)
             getExamUseCase().run {
