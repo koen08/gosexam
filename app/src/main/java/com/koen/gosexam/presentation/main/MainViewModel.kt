@@ -45,9 +45,20 @@ class MainViewModel @Inject constructor(
     override val _uiState = MutableStateFlow(MainUiState())
     override val uiState: StateFlow<MainUiState> = _uiState.asStateFlow()
 
+    var textStartRange = ""
+    var testEndRange = ""
+
     init {
         initExam()
         collectExamFlowUseCase()
+    }
+
+    fun updateStartTextRange(text: String) {
+        textStartRange = text
+    }
+
+    fun updateEndTextRange(text: String) {
+        testEndRange = text
     }
 
     fun changeTypeExam(typeExam: TypeExam) {
@@ -59,7 +70,8 @@ class MainViewModel @Inject constructor(
     }
 
     fun changeButtonHelpersActive(buttonHelpers: ButtonHelpers) {
-        val textBtnHelper = if (buttonHelpers == ButtonHelpers.MAX) uiState.value.examSize.toString() else buttonHelpers.value
+        val textBtnHelper =
+            if (buttonHelpers == ButtonHelpers.MAX) uiState.value.examSize.toString() else buttonHelpers.value
         _uiState.update { state ->
             val lastButtonHelper = state.buttonHelpers == buttonHelpers
             state.copy(
@@ -105,7 +117,7 @@ class MainViewModel @Inject constructor(
                     sendEventShared(ErrorTextInput(stringResource.errorLarge))
                     return
                 }
-            } catch (e : java.lang.NumberFormatException) {
+            } catch (e: java.lang.NumberFormatException) {
                 sendEventShared(ErrorTextInput(stringResource.errorLarge))
                 return
             }
@@ -147,7 +159,7 @@ class MainViewModel @Inject constructor(
         _uiState.update { state ->
             val size = uiState.value.examSize
             val finishRange =
-                if (endRange in 1..size) endRange else if (size > 0) size else 1049
+                if (endRange in 1..size) endRange else if (size > 0) size else uiState.value.examSize
             state.copy(
                 startRange = if (startRange > 0) startRange else 1,
                 endRange = finishRange
@@ -173,7 +185,7 @@ class MainViewModel @Inject constructor(
             startRangeMutable = uiState.value.examSize
         }
         if (endRangeInt < startRangeMutable) {
-            endRangeMutable = uiState.value.examSize
+            endRangeMutable = endRangeInt
         }
         if (endRangeInt > uiState.value.examSize) {
             endRangeMutable = uiState.value.examSize
@@ -200,7 +212,7 @@ class MainViewModel @Inject constructor(
 
     private fun collectExamFlowUseCase() {
         viewModelScope.launch {
-            getSizeExamFlow.invoke().collect {size ->
+            getSizeExamFlow.invoke().collect { size ->
                 _uiState.update { state ->
                     state.copy(
                         examSize = size,

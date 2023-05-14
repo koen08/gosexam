@@ -49,6 +49,9 @@ class MainFragment :
         changeSoftInput(false)
         binding.run {
             btnStartExam.setOnClickListener {
+                viewModel.updateRangeAndSendEvent(
+                    viewModel.textStartRange, viewModel.testEndRange
+                )
                 viewModel.generateExam()
             }
             vpCreateTest.apply {

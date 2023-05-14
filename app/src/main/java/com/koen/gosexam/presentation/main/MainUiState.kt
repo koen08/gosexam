@@ -11,5 +11,7 @@ data class MainUiState(
     val examSize: Int = 0,
     val startRange : Int = 0,
     val endRange: Int = 0,
-    val textInfoTest : String = ""
+    val textInfoTest : String = "",
+    val startTextRange : String = "",
+    val endTextRange: String = ""
 ) : UiState

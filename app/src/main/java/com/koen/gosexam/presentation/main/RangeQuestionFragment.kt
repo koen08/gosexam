@@ -1,20 +1,26 @@
 package com.koen.gosexam.presentation.main
 
+import android.content.Context
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import androidx.annotation.Dimension
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import com.google.android.material.slider.RangeSlider
-import com.google.android.material.slider.Slider
 import com.koen.gosexam.R
-import com.koen.gosexam.databinding.FragmentMainBinding
 import com.koen.gosexam.databinding.FragmentRangeQuestionBinding
 import com.koen.gosexam.extension.orZero
 import com.koen.gosexam.presentation.base.BaseFragment
 import com.koen.gosexam.presentation.models.base.UiEvent
 import com.koen.gosexam.presentation.models.uiEvent.RangeSliderInit
 import com.koen.gosexam.presentation.models.uiEvent.RangeSliderValues
+
 
 class RangeQuestionFragment :
     BaseFragment<MainUiState, MainViewModel, FragmentRangeQuestionBinding>(R.layout.fragment_range_question) {
@@ -52,16 +58,44 @@ class RangeQuestionFragment :
             })
 
             etStart.editText?.doAfterTextChanged {
-                viewModel.updateRangeAndSendEvent(
-                    startRange = it.toString()
+                viewModel.updateStartTextRange(
+                    text = it.toString()
                 )
             }
 
             etFinish.editText?.doAfterTextChanged {
-                viewModel.updateRangeAndSendEvent(
-                    endRange = it.toString()
+                viewModel.updateEndTextRange(
+                    text = it.toString()
                 )
             }
+
+            etStart.editText?.setOnEditorActionListener { textView, i, keyEvent ->
+                return@setOnEditorActionListener if (i == EditorInfo.IME_ACTION_DONE) {
+                    viewModel.updateRangeAndSendEvent(
+                        startRange = textView.text.toString(),
+                        endRange = etFinish.editText?.text.toString()
+                    )
+                    val imm = context?.getSystemService(
+                        INPUT_METHOD_SERVICE
+                    ) as InputMethodManager?
+                    imm?.hideSoftInputFromWindow(binding.etStart.windowToken, 0)
+                    true
+                } else false
+            }
+            etFinish.editText?.setOnEditorActionListener { textView, i, keyEvent ->
+                return@setOnEditorActionListener if (i == EditorInfo.IME_ACTION_DONE) {
+                    viewModel.updateRangeAndSendEvent(
+                        endRange = textView.text.toString(),
+                        startRange = etStart.editText?.text.toString()
+                    )
+                    val imm = context?.getSystemService(
+                        INPUT_METHOD_SERVICE
+                    ) as InputMethodManager?
+                    imm?.hideSoftInputFromWindow(binding.etFinish.windowToken, 0)
+                    true
+                } else false
+            }
+
         }
     }
 
