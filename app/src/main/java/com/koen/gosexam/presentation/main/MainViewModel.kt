@@ -190,6 +190,9 @@ class MainViewModel @Inject constructor(
         if (endRangeInt > uiState.value.examSize) {
             endRangeMutable = uiState.value.examSize
         }
+        if (endRangeInt <= 0) {
+            endRangeMutable = startRangeMutable + 1
+        }
         if (startRangeMutable > 0 && endRangeMutable <= uiState.value.examSize) {
             sendEventShared(RangeSliderValues(startRangeMutable, endRangeMutable))
         }
