@@ -8,6 +8,8 @@ import com.koen.gosexam.domain.exam.SaveTypeFaculty
 import com.koen.gosexam.domain.models.TypeFaculty
 import com.koen.gosexam.presentation.base.BaseViewModel
 import com.koen.gosexam.presentation.examlist.ExamListUiState
+import com.koen.gosexam.presentation.models.uiEvent.DismissLoading
+import com.koen.gosexam.presentation.models.uiEvent.Loading
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -42,7 +44,10 @@ class ProfileViewModel @Inject constructor(
     }
 
     private suspend fun fetchExam() {
-        getExamUseCase()
+        sendEvent(Loading)
+        getExamUseCase().run {
+            sendEvent(DismissLoading)
+        }
     }
 
     private fun getTypeFaculty() {

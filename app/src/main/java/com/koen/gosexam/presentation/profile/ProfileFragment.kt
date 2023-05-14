@@ -12,8 +12,12 @@ import com.koen.gosexam.domain.models.TypeFaculty
 import com.koen.gosexam.domain.models.TypeFaculty.Companion.isMedical
 import com.koen.gosexam.domain.models.TypeFaculty.Companion.isPediator
 import com.koen.gosexam.presentation.base.BaseFragment
+import com.koen.gosexam.presentation.dialog.loader.FullScreenLoaderDialog
 import com.koen.gosexam.presentation.examlist.ExamListUiState
 import com.koen.gosexam.presentation.examlist.ExamListViewModel
+import com.koen.gosexam.presentation.models.base.UiEvent
+import com.koen.gosexam.presentation.models.uiEvent.DismissLoading
+import com.koen.gosexam.presentation.models.uiEvent.Loading
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,6 +27,8 @@ class ProfileFragment:
 
     override fun initViewBinding(inflater: LayoutInflater): FragmentProfileBinding =
         FragmentProfileBinding.inflate(inflater)
+
+    private var loadingDialog : FullScreenLoaderDialog? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,5 +48,25 @@ class ProfileFragment:
             btnSelectionMedical.check = uiState.typeFaculty.isMedical
             btnSelectionPediator.check = uiState.typeFaculty.isPediator
         }
+    }
+
+    override fun handleUiEvent(uiEvent: UiEvent) {
+        super.handleUiEvent(uiEvent)
+        when(uiEvent) {
+            is Loading -> {
+                loadingDialog = FullScreenLoaderDialog.Builder(requireContext()).run {
+                    setTitleText("Загрузка")
+                    show()
+                }
+            }
+            is DismissLoading -> {
+                clearLoadingDialog()
+            }
+        }
+    }
+
+    private fun clearLoadingDialog() {
+        loadingDialog?.dismiss()
+        loadingDialog = null
     }
 }
