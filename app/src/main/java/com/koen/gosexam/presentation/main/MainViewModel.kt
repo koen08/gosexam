@@ -71,7 +71,7 @@ class MainViewModel @Inject constructor(
 
     fun changeButtonHelpersChangeText(buttonHelpers: ButtonHelpers, currentText: String) {
         if (buttonHelpers != ButtonHelpers.NO_ACTIVE) {
-            buttonHelpers.value
+            if (buttonHelpers == ButtonHelpers.MAX) uiState.value.examSize.toString() else buttonHelpers.value
         } else {
             currentText
         }.also { newText ->

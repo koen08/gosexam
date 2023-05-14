@@ -37,7 +37,7 @@ class CountQuestionFragment : BaseFragment<MainUiState, MainViewModel, FragmentC
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) = Unit
 
         override fun onTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            val buttonHelpers = ButtonHelpers.getButtonHelpers(text.toString())
+            val buttonHelpers = ButtonHelpers.getButtonHelpers(text.toString(), viewModel.uiState.value.examSize)
             binding.etAmountQuestion.error = ""
             viewModel.changeButtonHelpersChangeText(buttonHelpers, text.toString())
         }
@@ -102,7 +102,7 @@ class CountQuestionFragment : BaseFragment<MainUiState, MainViewModel, FragmentC
     }
 
     private fun setCheckHelpersButton(buttonHelpers: ButtonHelpers?) {
-        `listSelectionButtonMini`.forEach {
+        listSelectionButtonMini.forEach {
             it.value.check = false
         }
 
