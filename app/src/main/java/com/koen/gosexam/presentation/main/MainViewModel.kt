@@ -7,6 +7,7 @@ import com.koen.gosexam.domain.exam.GenerateExamUseCase
 import com.koen.gosexam.domain.exam.GenerateRangeExamUseCase
 import com.koen.gosexam.domain.exam.GetExamSizeUseCase
 import com.koen.gosexam.domain.exam.GetExamUseCase
+import com.koen.gosexam.domain.exam.GetSizeExamFlowUseCase
 import com.koen.gosexam.extension.isValid
 import com.koen.gosexam.extension.toIntOrZero
 import com.koen.gosexam.presentation.base.BaseViewModel
@@ -21,6 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -32,18 +34,20 @@ class MainViewModel @Inject constructor(
     private val generateExamUseCase: GenerateExamUseCase,
     private val getExamSizeUseCase: GetExamSizeUseCase,
     private val generateRangeExamUseCase: GenerateRangeExamUseCase,
-    private val stringResource: StringResource
+    private val stringResource: StringResource,
+    private val getSizeExamFlow: GetSizeExamFlowUseCase
 ) : BaseViewModel<MainUiState>() {
 
     companion object {
         private const val MIN_VALUE_SLIDER = 1
     }
 
-    override val _uiState: MutableStateFlow<MainUiState> = MutableStateFlow(MainUiState())
+    override val _uiState = MutableStateFlow(MainUiState())
     override val uiState: StateFlow<MainUiState> = _uiState.asStateFlow()
 
     init {
         initExam()
+        collectExamFlowUseCase()
     }
 
     fun changeTypeExam(typeExam: TypeExam) {
@@ -55,11 +59,12 @@ class MainViewModel @Inject constructor(
     }
 
     fun changeButtonHelpersActive(buttonHelpers: ButtonHelpers) {
+        val textBtnHelper = if (buttonHelpers == ButtonHelpers.MAX) uiState.value.examSize.toString() else buttonHelpers.value
         _uiState.update { state ->
             val lastButtonHelper = state.buttonHelpers == buttonHelpers
             state.copy(
                 buttonHelpers = if (lastButtonHelper) ButtonHelpers.NO_ACTIVE else buttonHelpers,
-                currentText = if (lastButtonHelper) ButtonHelpers.NO_ACTIVE.value else buttonHelpers.value
+                currentText = if (lastButtonHelper) ButtonHelpers.NO_ACTIVE.value else textBtnHelper
             )
         }
     }
@@ -96,7 +101,7 @@ class MainViewModel @Inject constructor(
         val currentTab = uiState.value.currentTab
         if (currentTab.isFirst() && uiState.value.currentText.length >= 4) {
             try {
-                if (uiState.value.currentText.toIntOrZero() > 1049) {
+                if (uiState.value.currentText.toIntOrZero() > uiState.value.examSize) {
                     sendEventShared(ErrorTextInput(stringResource.errorLarge))
                     return
                 }
@@ -188,15 +193,20 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             sendEventShared(Loading)
             getExamUseCase().run {
-                val size = withContext(Dispatchers.IO) {
-                    getExamSizeUseCase()
-                }
+                sendEventShared(DismissLoading)
+            }
+        }
+    }
+
+    private fun collectExamFlowUseCase() {
+        viewModelScope.launch {
+            getSizeExamFlow.invoke().collect {size ->
                 _uiState.update { state ->
                     state.copy(
-                        examSize = size
+                        examSize = size,
+                        textInfoTest = stringResource.getTextInfoTest(size.toString())
                     )
                 }
-                sendEventShared(DismissLoading)
                 sendEventRangeSlider(size)
             }
         }

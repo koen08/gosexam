@@ -11,6 +11,9 @@ import com.koen.gosexam.domain.exam.ExamRepository
 import com.koen.gosexam.domain.models.Exam
 import com.koen.gosexam.domain.models.TypeFaculty
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayInputStream
 import java.io.InputStreamReader
@@ -27,6 +30,8 @@ class ExamRepositoryImpl @Inject constructor(
         const val fileNamePediator = "pediator.txt"
     }
 
+    private val examSizeMutableStateFlow = MutableStateFlow(0)
+
     override suspend fun getExam() {
         val type = sharedPrefString.get()
         val fileName = if (type == TypeFaculty.MEDICAL.nameValue) {
@@ -37,6 +42,7 @@ class ExamRepositoryImpl @Inject constructor(
             examDao.deleteTable()
             examDao.resetAutoincrement()
             examDao.insert(exam.mapToEntityList())
+            examSizeMutableStateFlow.emit(exam.size)
         }
     }
 
@@ -67,6 +73,10 @@ class ExamRepositoryImpl @Inject constructor(
         return if (type == TypeFaculty.MEDICAL.nameValue) {
             TypeFaculty.MEDICAL
         } else TypeFaculty.PEDIATOR
+    }
+
+    override fun getExamSizeFlow(): Flow<Int> {
+        return examSizeMutableStateFlow
     }
 
 }

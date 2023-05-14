@@ -2,6 +2,7 @@ package com.koen.gosexam.domain.exam
 
 import com.koen.gosexam.domain.models.Exam
 import com.koen.gosexam.domain.models.TypeFaculty
+import kotlinx.coroutines.flow.Flow
 
 interface ExamRepository {
     suspend fun getExam()
@@ -17,4 +18,6 @@ interface ExamRepository {
     suspend fun saveTypeFaculty(typeFaculty: TypeFaculty)
 
     suspend fun getTypeFaculty() : TypeFaculty
+
+    fun getExamSizeFlow() : Flow<Int>
 }

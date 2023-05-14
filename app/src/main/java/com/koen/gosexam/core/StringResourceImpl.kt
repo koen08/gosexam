@@ -54,6 +54,10 @@ class StringResourceImpl(private val resource: Resources) : StringResource {
         } else resultTitleFail
     }
 
+    override fun getTextInfoTest(size: String): String {
+        return resource.getString(R.string.main_tvInfoText, size)
+    }
+
     override fun getResultCountAnswer(countAnswerTrue: Int, commonAnswerTrue: Int): String {
         return resource.getString(
             R.string.examResult_countTest,

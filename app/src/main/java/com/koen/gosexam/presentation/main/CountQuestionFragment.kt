@@ -90,6 +90,8 @@ class CountQuestionFragment : BaseFragment<MainUiState, MainViewModel, FragmentC
         binding.etAmountQuestion.editText?.setText(uiState.currentText)
         val text = binding.etAmountQuestion.editText?.text.toString().length
         binding.etAmountQuestion.editText?.setSelection(text)
+        binding.btnMax.text = uiState.examSize.toString()
+        binding.tvInfoTest.text = uiState.textInfoTest
     }
 
     override fun handleUiEvent(uiEvent: UiEvent) {

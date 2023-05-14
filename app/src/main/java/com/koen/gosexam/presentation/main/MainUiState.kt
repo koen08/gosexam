@@ -10,5 +10,6 @@ data class MainUiState(
     val currentTab: CurrentTab = CurrentTab.FIRST,
     val examSize: Int = 0,
     val startRange : Int = 0,
-    val endRange: Int = 0
+    val endRange: Int = 0,
+    val textInfoTest : String = ""
 ) : UiState

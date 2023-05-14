@@ -23,4 +23,6 @@ interface StringResource {
     fun getTextTitleResult(countAnswerTrue: Int, commonAnswerTrue: Int): String
 
     fun getResultCountAnswer(countAnswerTrue: Int, commonAnswerTrue: Int): String
+
+    fun getTextInfoTest(size: String) : String
 }
