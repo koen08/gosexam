@@ -68,9 +68,9 @@ class StringResourceImpl(private val resource: Resources) : StringResource {
     }
 
     override fun getTimeTimeSpent(time: Long): String {
-        val commonTime = 60_000 - time
+        val commonTime = 3600000 - time
         var minutes = TimeUnit.MILLISECONDS.toMinutes(commonTime)
-        var seconds = TimeUnit.MILLISECONDS.toSeconds(time) - TimeUnit.MINUTES.toSeconds(minutes)
+        var seconds = TimeUnit.MILLISECONDS.toSeconds(commonTime) - TimeUnit.MINUTES.toSeconds(minutes)
         if (minutes <= 0 && seconds <= 0) {
             minutes = 60
             seconds = 0
