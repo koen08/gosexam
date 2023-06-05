@@ -1,15 +1,11 @@
 package com.koen.gosexam.presentation.main
 
-import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import androidx.annotation.Dimension
-import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import com.google.android.material.slider.RangeSlider
@@ -20,7 +16,6 @@ import com.koen.gosexam.presentation.base.BaseFragment
 import com.koen.gosexam.presentation.models.base.UiEvent
 import com.koen.gosexam.presentation.models.uiEvent.RangeSliderInit
 import com.koen.gosexam.presentation.models.uiEvent.RangeSliderValues
-
 
 class RangeQuestionFragment :
     BaseFragment<MainUiState, MainViewModel, FragmentRangeQuestionBinding>(R.layout.fragment_range_question) {
@@ -94,6 +89,12 @@ class RangeQuestionFragment :
                     imm?.hideSoftInputFromWindow(binding.etFinish.windowToken, 0)
                     true
                 } else false
+            }
+
+            cbRandomQuestions.setOnCheckedChangeListener { _, isChecked ->
+                viewModel.updateRandomRange(
+                    isChecked
+                )
             }
 
         }

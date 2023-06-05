@@ -78,12 +78,12 @@ class ExamTestFragment :
         mRewardedAd?.setRewardedAdEventListener(object : RewardedAdEventListener {
             override fun onAdLoaded() {
                 Log.e("YANDEX:ADS:", "Show completed: onAdLoaded")
-
+                viewModel.updateSuccessAds(ExamTestUiState.LoadingStateAds.SUCCESS)
             }
 
             override fun onAdFailedToLoad(error: AdRequestError) {
                 Log.e("YANDEX:ADS:", "Failed process load ads : ${error.description}")
-                viewModel.prepareResult()
+                viewModel.updateSuccessAds(ExamTestUiState.LoadingStateAds.FAILED)
             }
 
             override fun onAdShown() = Unit

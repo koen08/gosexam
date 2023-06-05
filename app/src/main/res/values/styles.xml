@@ -22,4 +22,9 @@
         <item name="android:windowBackground">@color/loaderBackground</item>
     </style>
 
+    <style name="Widget.CheckBoxStyles" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
+        <item name="colorControlActivated">@color/primary_80</item>
+        <item name="android:textAppearance">@style/DefaultBadge</item>
+    </style>
+
 </resources>

@@ -13,5 +13,6 @@ data class MainUiState(
     val endRange: Int = 0,
     val textInfoTest : String = "",
     val startTextRange : String = "",
-    val endTextRange: String = ""
+    val endTextRange: String = "",
+    val isRandomRange: Boolean = false,
 ) : UiState

@@ -135,7 +135,7 @@ class MainFragment :
             is OpenExamTest -> {
                 findTopNavController().navigate(
                     R.id.action_homeFragment_to_examFragment, bundleOf(
-                        KEY_ARG_EXAM_TEST_UI to uiEvent.examUiList
+                        KEY_ARG_EXAM_TEST_UI to uiEvent.settingsExam
                     )
                 )
             }

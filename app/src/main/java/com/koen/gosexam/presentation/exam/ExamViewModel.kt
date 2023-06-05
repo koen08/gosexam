@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.koen.gosexam.core.StringResource
+import com.koen.gosexam.domain.exam.GenerateExamUseCase
+import com.koen.gosexam.domain.exam.GenerateRangeExamUseCase
 import com.koen.gosexam.domain.exam.PrepareAnswerTestUseCase
 import com.koen.gosexam.domain.exam.PrepareResultTestUseCase
 import com.koen.gosexam.extension.getListOrEmpty
@@ -11,6 +13,7 @@ import com.koen.gosexam.presentation.base.BaseViewModel
 import com.koen.gosexam.presentation.exam.ExamTestFragment.Companion.KEY_ARG_EXAM_TEST_UI
 import com.koen.gosexam.presentation.models.AnswerTestUi
 import com.koen.gosexam.presentation.models.ExamUi
+import com.koen.gosexam.presentation.models.SettingsExam
 import com.koen.gosexam.presentation.models.uiEvent.HideButton
 import com.koen.gosexam.presentation.models.uiEvent.OpenResultTest
 import com.koen.gosexam.presentation.models.uiEvent.ShowAds
@@ -31,14 +34,24 @@ class ExamViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val prepareAnswerTestUseCase: PrepareAnswerTestUseCase,
     private val prepareResultTestUseCase: PrepareResultTestUseCase,
-    private val stringResource: StringResource
+    private val stringResource: StringResource,
+    private val generateExamUseCase: GenerateExamUseCase,
+    private val generateRangeExamUseCase: GenerateRangeExamUseCase,
 ) : BaseViewModel<ExamTestUiState>() {
     override val _uiState: MutableStateFlow<ExamTestUiState> = MutableStateFlow(
         ExamTestUiState(
-            savedStateHandle.getListOrEmpty(KEY_ARG_EXAM_TEST_UI)
+            settingsExam = savedStateHandle.get<SettingsExam>(KEY_ARG_EXAM_TEST_UI)
+                ?: SettingsExam.RandomTest(
+                    countQuestion = 1,
+                    isExamMode = false
+                )
         )
     )
     override val uiState: StateFlow<ExamTestUiState> = _uiState.asStateFlow()
+
+    init {
+        launchExam()
+    }
 
     fun updateAnswerList(answerSelected: AnswerTestUi, examSelected: ExamUi) {
         if (!uiState.value.clickableAnswers) {
@@ -80,8 +93,12 @@ class ExamViewModel @Inject constructor(
 
     fun sendShowAds() {
         viewModelScope.launch {
-            delay(2000)
-            sendEvent(ShowAds)
+            if (uiState.value.isLoadSuccessAds == ExamTestUiState.LoadingStateAds.NONE) {
+                delay(2000)
+                sendEvent(ShowAds)
+            } else if (uiState.value.isLoadSuccessAds == ExamTestUiState.LoadingStateAds.FAILED) {
+                prepareResult()
+            }
         }
     }
 
@@ -91,6 +108,38 @@ class ExamViewModel @Inject constructor(
                 prepareResultTestUseCase(examUiList)
             }
             sendEvent(OpenResultTest(resultList))
+        }
+    }
+
+    fun updateSuccessAds(stateLoading: ExamTestUiState.LoadingStateAds) {
+        _uiState.update { state ->
+            state.copy(
+                isLoadSuccessAds = stateLoading
+            )
+        }
+    }
+
+    private fun launchExam() {
+        viewModelScope.launch {
+            val examSettings = uiState.value.settingsExam
+            if (examSettings is SettingsExam.RandomTest) {
+                withContext(Dispatchers.IO) { generateExamUseCase(countQuestion = examSettings.countQuestion) }.also {
+                    updateExamUi(
+                        examUiList = it
+                    )
+                }
+            } else if (examSettings is SettingsExam.RangeTest) {
+                withContext(Dispatchers.IO) {
+                    generateRangeExamUseCase(
+                        minIndex = examSettings.startRange,
+                        maxIndex = examSettings.endRange
+                    )
+                }.also {
+                    updateExamUi(
+                        examUiList = it
+                    )
+                }
+            }
         }
     }
 

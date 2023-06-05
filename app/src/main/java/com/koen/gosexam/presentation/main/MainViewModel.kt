@@ -19,6 +19,7 @@ import com.koen.gosexam.presentation.core.CurrentTab.Companion.isFirst
 import com.koen.gosexam.presentation.core.Text
 import com.koen.gosexam.presentation.dialog.info.InfoDialogBtnModel
 import com.koen.gosexam.presentation.dialog.info.InfoDialogModel
+import com.koen.gosexam.presentation.models.SettingsExam
 import com.koen.gosexam.presentation.models.uiEvent.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -36,13 +37,9 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val getExamUseCase: GetExamUseCase,
-    private val generateExamUseCase: GenerateExamUseCase,
-    private val getExamSizeUseCase: GetExamSizeUseCase,
-    private val generateRangeExamUseCase: GenerateRangeExamUseCase,
     private val stringResource: StringResource,
     private val getSizeExamFlow: GetSizeExamFlowUseCase,
     private val getStartFirstAppUseCase: GetStartFirstAppUseCase,
-    private val saveStartFirstAppUseCase: SaveStartFirstAppUseCase
 ) : BaseViewModel<MainUiState>() {
 
     companion object {
@@ -135,19 +132,20 @@ class MainViewModel @Inject constructor(
             return
         }
         if (currentTab.isFirst()) {
-            viewModelScope.launch {
-                val result = generateExamUseCase(countQuestion)
-                sendEvent(OpenExamTest(result))
-            }
+            SettingsExam.RandomTest(
+                countQuestion = countQuestion,
+                isExamMode = false
+            )
         } else {
-            viewModelScope.launch {
-                val startRange = uiState.value.startRange
-                val endRange = uiState.value.endRange
-                val result = withContext(Dispatchers.IO) {
-                    generateRangeExamUseCase(startRange, endRange)
-                }
-                sendEvent(OpenExamTest(result))
-            }
+            val startRange = uiState.value.startRange
+            val endRange = uiState.value.endRange
+            SettingsExam.RangeTest(
+                startRange = startRange,
+                endRange = endRange,
+                isRandomPosition = uiState.value.isRandomRange
+            )
+        }.let {
+            sendEvent(OpenExamTest(it))
         }
     }
 
@@ -243,6 +241,14 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             delay(2000)
             sendEventShared(ShowAds)
+        }
+    }
+
+    fun updateRandomRange(isCheck: Boolean) {
+        _uiState.update { state ->
+            state.copy(
+                isRandomRange = isCheck
+            )
         }
     }
 
