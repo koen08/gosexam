@@ -1,20 +1,19 @@
 package com.koen.gosexam.presentation.models
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
-@Parcelize
+@Serializable
 data class ResultExamUi(
     val id: Int = 0,
     val question: String = "",
     val resultAnswerList: List<ResultAnswerUi> = emptyList()
-) : Parcelable
+)
 
-@Parcelize
+@Serializable
 data class ResultAnswerUi(
     val text: String = "",
     val selected: Boolean = false,
     val isTrue: Boolean = false,
     val textColor: Int = 0,
     val styleText: Int = 0
-) : Parcelable
+)

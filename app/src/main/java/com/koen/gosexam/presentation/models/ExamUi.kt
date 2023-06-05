@@ -27,6 +27,7 @@ fun List<ExamUi>.mapToResult(
         this.filter { it.answers.find { element -> element.selected && element.isTrue } != null }.size
     return ResultTestUi(
         countTrueAnswer = countTrueAnswer,
+        isSuccess = countTrueAnswer >= 0.7,
         textTitleResult = stringResource.getTextTitleResult(countTrueAnswer, this.size),
         textDescriptionResult = stringResource.getResultCountAnswer(countTrueAnswer, this.size),
         commonAnswer = this.size,

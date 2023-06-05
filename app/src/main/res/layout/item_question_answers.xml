@@ -14,7 +14,7 @@
 
         <TextView
             android:id="@+id/tvQuestionTitle"
-            style="@style/DefaultBody"
+            style="@style/DefaultTitle3"
             android:textColor="@color/black_100"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,6 +43,7 @@
         android:id="@+id/rvAnswers"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="12dp"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton

@@ -22,7 +22,7 @@ class ExamResultFragment :
     BaseFragment<ExamResultUiState, ExamResultViewModel, FragmentExamResultBinding>(R.layout.fragment_exam_result) {
 
     companion object {
-        const val ARG_KEY_RESULT_UI = "ARG_KEY_RESULT_UI"
+        const val ARG_KEY_RESULT_UI = "id"
     }
 
     override val viewModel: ExamResultViewModel by viewModels()
@@ -53,10 +53,12 @@ class ExamResultFragment :
     override fun handleUiState(uiState: ExamResultUiState) {
         super.handleUiState(uiState)
         binding.run {
-            tvTitle.text = uiState.examResultList.textTitleResult
-            tvInfo.text = uiState.examResultList.textDescriptionResult
-            adapterResult.items = uiState.examResultList.examList
-            containerTitle.background = ContextCompat.getDrawable(requireContext(), uiState.examResultList.backgroundTitle)
+            uiState.examResultList?.let {
+                tvTitle.text = it.textTitleResult
+                tvInfo.text = it.textDescriptionResult
+                adapterResult.items = it.examList
+                containerTitle.background = ContextCompat.getDrawable(requireContext(), it.backgroundTitle)
+            }
         }
     }
 }

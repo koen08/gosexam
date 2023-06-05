@@ -72,7 +72,7 @@ class ExamTestFragment :
             }
         }
         mRewardedAd = RewardedAd(requireContext());
-        mRewardedAd?.setAdUnitId("R-M-2317669-1");
+        mRewardedAd?.setAdUnitId("R-M-2317669-2");
         val adRequest: AdRequest = AdRequest.Builder().build()
         //demo - demo-rewarded-yandex //release - R-M-2317669-1
         mRewardedAd?.setRewardedAdEventListener(object : RewardedAdEventListener {
@@ -128,7 +128,7 @@ class ExamTestFragment :
             is OpenResultTest -> {
                 findNavController().navigate(
                     R.id.action_examFragment_to_examResultFragment, bundleOf(
-                        ARG_KEY_RESULT_UI to uiEvent.resultTest
+                        ARG_KEY_RESULT_UI to uiEvent.id
                     )
                 )
             }

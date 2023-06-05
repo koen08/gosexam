@@ -1,24 +1,25 @@
-package com.koen.gosexam.domain.exam
+package com.koen.gosexam.domain.exam.result
 
 import com.koen.gosexam.core.ColorResource
 import com.koen.gosexam.core.DrawableResource
 import com.koen.gosexam.core.StringResource
 import com.koen.gosexam.core.StyleResource
+import com.koen.gosexam.domain.exam.ExamRepository
 import com.koen.gosexam.presentation.models.ExamUi
 import com.koen.gosexam.presentation.models.ResultTestUi
-import com.koen.gosexam.presentation.models.mapToEntity
-import com.koen.gosexam.presentation.models.mapToResult
+import com.koen.gosexam.presentation.models.mapToUi
 import javax.inject.Inject
 
-class PrepareResultTestUseCaseImpl @Inject constructor(
+class GetResultsExamByIdUseCaseImpl @Inject constructor(
     private val stringResource: StringResource,
     private val colorResource: ColorResource,
     private val styleResource: StyleResource,
     private val drawableResource: DrawableResource,
     private val examRepository: ExamRepository,
-) : PrepareResultTestUseCase {
-    override suspend fun invoke(examUiList: List<ExamUi>): Long {
-        val results = examUiList.mapToResult(stringResource, colorResource, styleResource, drawableResource)
-        return examRepository.saveResults(results.mapToEntity())
+) : GetResultsExamByIdUseCase {
+    override suspend fun invoke(id: Long): ResultTestUi {
+        return examRepository.getResultById(id = id).mapToUi(
+            stringResource, colorResource, styleResource, drawableResource
+        )
     }
 }

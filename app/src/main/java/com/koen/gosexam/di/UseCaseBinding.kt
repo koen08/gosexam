@@ -1,6 +1,8 @@
 package com.koen.gosexam.di
 
 import com.koen.gosexam.domain.exam.*
+import com.koen.gosexam.domain.exam.result.GetResultsExamByIdUseCase
+import com.koen.gosexam.domain.exam.result.GetResultsExamByIdUseCaseImpl
 import com.koen.gosexam.domain.question.PrepareFalseAnswerUseCase
 import com.koen.gosexam.domain.question.PrepareFalseAnswerUseCaseImpl
 import com.koen.gosexam.domain.start.GetStartFirstAppUseCase
@@ -55,4 +57,7 @@ interface UseCaseBinding {
 
     @Binds
     fun bindSaveStartFirstAppUseCase(useCase: SaveStartFirstAppUseCaseImpl): SaveStartFirstAppUseCase
+
+    @Binds
+    fun bindGetResultExamByIdUseCase(useCase: GetResultsExamByIdUseCaseImpl): GetResultsExamByIdUseCase
 }

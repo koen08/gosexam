@@ -2,8 +2,10 @@ package com.koen.gosexam.data
 
 import android.util.Log
 import com.google.firebase.storage.FirebaseStorage
+import com.koen.gosexam.data.local.entity.ResultExamEntity
 import com.koen.gosexam.data.local.entity.mapToDomain
 import com.koen.gosexam.data.local.exams.ExamDao
+import com.koen.gosexam.data.local.exams.ResultsDao
 import com.koen.gosexam.data.local.shared.SharedPrefString
 import com.koen.gosexam.data.local.shared.StartFirstAppSharedPref
 import com.koen.gosexam.data.local.shared.TypeFacultySharedPref
@@ -12,6 +14,7 @@ import com.koen.gosexam.data.remote.dto.mapToEntityList
 import com.koen.gosexam.domain.exam.ExamRepository
 import com.koen.gosexam.domain.models.Exam
 import com.koen.gosexam.domain.models.TypeFaculty
+import com.koen.gosexam.presentation.models.ResultTestUi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,6 +27,7 @@ import javax.inject.Inject
 class ExamRepositoryImpl @Inject constructor(
     private val examRemoteDataSource: ExamRemoteDataSource,
     private val examDao: ExamDao,
+    private val resultsDao: ResultsDao,
     private val sharedPrefString: SharedPrefString,
     private val startFirstAppSharedPref: StartFirstAppSharedPref
 ) : ExamRepository {
@@ -94,6 +98,14 @@ class ExamRepositoryImpl @Inject constructor(
 
     override suspend fun saveIsStartFirstApp() {
         startFirstAppSharedPref.save(false)
+    }
+
+    override suspend fun saveResults(result: ResultExamEntity) : Long {
+        return resultsDao.insert(result)
+    }
+
+    override suspend fun getResultById(id: Long): ResultExamEntity {
+        return resultsDao.getById(id)
     }
 
 }

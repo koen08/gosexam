@@ -10,6 +10,6 @@ data class OpenDetailsQuestion(val questionUi: QuestionUi) : UiEvent
 
 data class OpenExamTest(val settingsExam: SettingsExam) : UiEvent
 
-data class OpenResultTest(val resultTest: ResultTestUi) : UiEvent
+data class OpenResultTest(val id: Long) : UiEvent
 
 object OpenSelectionFaculty : UiEvent

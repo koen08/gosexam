@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.koen.gosexam.data.local.AppDataBase
 import com.koen.gosexam.data.local.exams.ExamDao
+import com.koen.gosexam.data.local.exams.ResultsDao
 import com.koen.gosexam.presentation.activity.App
 import dagger.Module
 import dagger.Provides
@@ -28,5 +29,11 @@ class DataBaseBinding {
     @Singleton
     fun provideExamDao(appDataBase: AppDataBase): ExamDao {
         return appDataBase.examDao
+    }
+
+    @Provides
+    @Singleton
+    fun provideResultDao(appDataBase: AppDataBase) : ResultsDao {
+        return appDataBase.resultsDao
     }
 }
