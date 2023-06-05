@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.koen.gosexam.R
@@ -15,12 +16,14 @@ import com.koen.gosexam.extension.findTopNavController
 import com.koen.gosexam.extension.hideBtn
 import com.koen.gosexam.extension.showBtn
 import com.koen.gosexam.presentation.base.BaseFragment
+import com.koen.gosexam.presentation.exam.ExamTestUiState.ExamMode.Companion.isExam
 import com.koen.gosexam.presentation.exam.result.ExamResultFragment.Companion.ARG_KEY_RESULT_UI
 import com.koen.gosexam.presentation.models.base.UiEvent
 import com.koen.gosexam.presentation.models.uiEvent.HideButton
 import com.koen.gosexam.presentation.models.uiEvent.OpenResultTest
 import com.koen.gosexam.presentation.models.uiEvent.ShowAds
 import com.koen.gosexam.presentation.models.uiEvent.ShowButton
+import com.koen.gosexam.presentation.models.uiEvent.TimerTicket
 import com.yandex.mobile.ads.common.AdRequest
 import com.yandex.mobile.ads.common.AdRequestError
 import com.yandex.mobile.ads.common.ImpressionData
@@ -108,12 +111,13 @@ class ExamTestFragment :
 
     override fun handleUiState(uiState: ExamTestUiState) {
         super.handleUiState(uiState)
-        adapterExam.items = uiState.examUiList
+        adapterExam.items = uiState.examList
         binding.vpExam.setCurrentItem(uiState.currentPosition, true)
         uiState.currentExam?.let { element ->
             binding.toolbar.title = element.positionQuestionTitle
         }
         binding.btnNext.text = uiState.btnText
+        binding.tvTimer.isVisible = uiState.examMode.isExam()
     }
 
     override fun handleUiEvent(uiEvent: UiEvent) {
@@ -137,6 +141,9 @@ class ExamTestFragment :
                 if (mRewardedAd?.isLoaded == true) {
                     mRewardedAd?.show()
                 } else viewModel.sendShowAds()
+            }
+            is TimerTicket -> {
+                binding.tvTimer.text = uiEvent.time
             }
         }
     }

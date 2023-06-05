@@ -60,4 +60,7 @@ interface UseCaseBinding {
 
     @Binds
     fun bindGetResultExamByIdUseCase(useCase: GetResultsExamByIdUseCaseImpl): GetResultsExamByIdUseCase
+
+    @Binds
+    fun bindPrepareAnswerTestExamModelUseCase(useCase: PrepareAnswerTestExamModeUseCaseImpl): PrepareAnswerTestExamModeUseCase
 }

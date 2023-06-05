@@ -28,4 +28,6 @@ interface StringResource {
     fun getResultCountAnswer(countAnswerTrue: Int, commonAnswerTrue: Int): String
 
     fun getTextInfoTest(size: String) : String
+
+    fun getLastTime(time: String) : String
 }

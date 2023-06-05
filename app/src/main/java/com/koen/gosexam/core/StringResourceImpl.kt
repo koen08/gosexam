@@ -61,6 +61,10 @@ class StringResourceImpl(private val resource: Resources) : StringResource {
         return resource.getString(R.string.main_tvInfoText, size)
     }
 
+    override fun getLastTime(time: String): String {
+        return resource.getString(R.string.examTest_lastTime, time)
+    }
+
     override fun getResultCountAnswer(countAnswerTrue: Int, commonAnswerTrue: Int): String {
         return resource.getString(
             R.string.examResult_countTest,

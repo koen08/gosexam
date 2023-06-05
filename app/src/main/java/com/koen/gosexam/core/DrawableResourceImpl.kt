@@ -1,7 +1,6 @@
 package com.koen.gosexam.core
 
 import android.content.Context
-import androidx.core.content.ContextCompat
 import com.koen.gosexam.R
 
 class DrawableResourceImpl(val context: Context) : DrawableResource {
@@ -13,10 +12,12 @@ class DrawableResourceImpl(val context: Context) : DrawableResource {
         get() = R.drawable.bg_solid_green_50_4
     override val bgSolidError50: Int
         get() = R.drawable.bg_solid_error_50_4
+    override val bgSolidPrimary30Cor4: Int
+        get() = R.drawable.bg_solid_primary_30_4
 
     override fun getSelectedPrimary80ElseGray60(isSelected: Boolean): Int {
         return if (isSelected) {
-            bgSolidPrimary80Corners4
+            bgSolidPrimary30Cor4
         } else bgSolidGray60Corners4
     }
 

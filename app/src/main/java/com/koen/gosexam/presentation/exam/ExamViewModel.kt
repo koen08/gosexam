@@ -1,16 +1,19 @@
 package com.koen.gosexam.presentation.exam
 
+import android.os.CountDownTimer
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.koen.gosexam.core.StringResource
 import com.koen.gosexam.domain.exam.GenerateExamUseCase
 import com.koen.gosexam.domain.exam.GenerateRangeExamUseCase
+import com.koen.gosexam.domain.exam.PrepareAnswerTestExamModeUseCase
 import com.koen.gosexam.domain.exam.PrepareAnswerTestUseCase
 import com.koen.gosexam.domain.exam.PrepareResultTestUseCase
 import com.koen.gosexam.extension.getListOrEmpty
 import com.koen.gosexam.presentation.base.BaseViewModel
 import com.koen.gosexam.presentation.exam.ExamTestFragment.Companion.KEY_ARG_EXAM_TEST_UI
+import com.koen.gosexam.presentation.exam.ExamTestUiState.ExamMode.Companion.isExam
 import com.koen.gosexam.presentation.models.AnswerTestUi
 import com.koen.gosexam.presentation.models.ExamUi
 import com.koen.gosexam.presentation.models.SettingsExam
@@ -18,6 +21,7 @@ import com.koen.gosexam.presentation.models.uiEvent.HideButton
 import com.koen.gosexam.presentation.models.uiEvent.OpenResultTest
 import com.koen.gosexam.presentation.models.uiEvent.ShowAds
 import com.koen.gosexam.presentation.models.uiEvent.ShowButton
+import com.koen.gosexam.presentation.models.uiEvent.TimerTicket
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -27,12 +31,15 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.Timer
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltViewModel
 class ExamViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val prepareAnswerTestUseCase: PrepareAnswerTestUseCase,
+    private val prepareAnswerTestExamModeUseCase: PrepareAnswerTestExamModeUseCase,
     private val prepareResultTestUseCase: PrepareResultTestUseCase,
     private val stringResource: StringResource,
     private val generateExamUseCase: GenerateExamUseCase,
@@ -49,8 +56,29 @@ class ExamViewModel @Inject constructor(
     )
     override val uiState: StateFlow<ExamTestUiState> = _uiState.asStateFlow()
 
+    private val timer = object : CountDownTimer(10_000, 1_000) {
+        override fun onTick(millisUntilFinished: Long) {
+            val minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)
+            val seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(minutes)
+            val result = String.format("%d:%02d", minutes, seconds)
+            sendEvent(TimerTicket(
+                stringResource.getLastTime(result)
+            ))
+        }
+
+        override fun onFinish() {
+            sendEvent(ShowAds)
+        }
+    }
+
     init {
         launchExam()
+        updateExamMode()
+    }
+
+    override fun onCleared() {
+        timer.cancel()
+        super.onCleared()
     }
 
     fun updateAnswerList(answerSelected: AnswerTestUi, examSelected: ExamUi) {
@@ -65,11 +93,21 @@ class ExamViewModel @Inject constructor(
                     uiState.value.examUiList
                 )
             }
+            val examUiListWithExamMode = if (uiState.value.examMode.isExam()) {
+                withContext(Dispatchers.IO) {
+                    prepareAnswerTestExamModeUseCase.invoke(
+                        answerSelected,
+                        examSelected,
+                        uiState.value.examUiList
+                    )
+                }
+            } else emptyList()
             val position = uiState.value.currentPosition
             val btnText = stringResource.getTextBtnCompleteOrNext(
                 complete = position + 1 >= examNewList.size
             )
             updateExamUi(examNewList)
+            updateExamUiExamMode(examUiListWithExamMode)
             updateBtnText(btnText)
             updateClickableAnswers(false)
             showButton()
@@ -127,6 +165,10 @@ class ExamViewModel @Inject constructor(
                     updateExamUi(
                         examUiList = it
                     )
+                    if (examSettings.isExamMode) {
+                        timer.start()
+                        updateExamUiExamMode(examUiList = it)
+                    }
                 }
             } else if (examSettings is SettingsExam.RangeTest) {
                 withContext(Dispatchers.IO) {
@@ -141,6 +183,14 @@ class ExamViewModel @Inject constructor(
                     )
                 }
             }
+        }
+    }
+
+    private fun updateExamUiExamMode(examUiList: List<ExamUi>) {
+        _uiState.update { state ->
+            state.copy(
+                examUiListWithExamMode = examUiList
+            )
         }
     }
 
@@ -174,5 +224,16 @@ class ExamViewModel @Inject constructor(
 
     private fun hideButton() {
         sendEvent(HideButton)
+    }
+
+    private fun updateExamMode() {
+        val settings = uiState.value.settingsExam
+        if (settings is SettingsExam.RandomTest) {
+            _uiState.update { state ->
+                state.copy(
+                    examMode = ExamTestUiState.ExamMode.getExamMode(isExam = settings.isExamMode)
+                )
+            }
+        }
     }
 }

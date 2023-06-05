@@ -45,45 +45,6 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.koen.gosexam.presentation.widget.SelectionButtonMini
-            android:id="@+id/btnMax"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etAmountQuestion" />
-
-        <com.koen.gosexam.presentation.widget.SelectionButtonMini
-            android:id="@+id/btn100"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="100"
-            app:layout_constraintStart_toEndOf="@+id/btnMax"
-            app:layout_constraintTop_toTopOf="@+id/btnMax" />
-
-        <com.koen.gosexam.presentation.widget.SelectionButtonMini
-            android:id="@+id/btn50"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="50"
-            app:layout_constraintStart_toEndOf="@+id/btn100"
-            app:layout_constraintTop_toTopOf="@+id/btnMax" />
-
-        <com.koen.gosexam.presentation.widget.SelectionButtonMini
-            android:id="@+id/btnMin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="16dp"
-            android:text="10"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/btn50"
-            app:layout_constraintTop_toTopOf="@+id/btnMax" />
-
         <TextView
             android:id="@+id/tvTitleTypeExam"
             style="@style/DefaultTitle3"
@@ -97,7 +58,97 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnMax" />
+            app:layout_constraintTop_toBottomOf="@+id/containerInfoAndSettings" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/containerInfoAndSettings"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etAmountQuestion">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/containerMiniBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.koen.gosexam.presentation.widget.SelectionButtonMini
+                    android:id="@+id/btnMax"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.koen.gosexam.presentation.widget.SelectionButtonMini
+                    android:id="@+id/btn100"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="100"
+                    app:layout_constraintStart_toEndOf="@+id/btnMax"
+                    app:layout_constraintTop_toTopOf="@+id/btnMax" />
+
+                <com.koen.gosexam.presentation.widget.SelectionButtonMini
+                    android:id="@+id/btn50"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="50"
+                    app:layout_constraintStart_toEndOf="@+id/btn100"
+                    app:layout_constraintTop_toTopOf="@+id/btnMax" />
+
+                <com.koen.gosexam.presentation.widget.SelectionButtonMini
+                    android:id="@+id/btnMin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="10"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/btn50"
+                    app:layout_constraintTop_toTopOf="@+id/btnMax" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tvInfoTime"
+                style="@style/DefaultBody"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="16dp"
+                android:drawablePadding="12dp"
+                android:gravity="center"
+                android:drawableTint="@color/primary_80"
+                android:drawableStart="@drawable/ic_info"
+                android:text="Таймер установлен на 60 минут"
+                android:textColor="@color/black_100"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.koen.gosexam.presentation.widget.SelectionButton
+            android:id="@+id/btnModeExam"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="Включить режим экзамена"
+            android:foreground="?selectableItemBackground"
+            app:check="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/containerInfoAndSettings" />
 
         <ImageView
             android:id="@+id/imgInfoExamType"
@@ -129,12 +180,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/bg_solid_gray_blue20_4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnMax">
+            app:layout_constraintTop_toBottomOf="@+id/btnModeExam">
 
             <ImageView
                 android:id="@+id/imageView"

@@ -15,4 +15,10 @@ data class MainUiState(
     val startTextRange : String = "",
     val endTextRange: String = "",
     val isRandomRange: Boolean = false,
-) : UiState
+    val examMode: ExamMode = ExamMode.WORKOUT,
+    val visibleBtnMini : Boolean = true
+) : UiState {
+    enum class ExamMode {
+        WORKOUT, EXAM
+    }
+}

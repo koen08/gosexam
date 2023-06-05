@@ -44,6 +44,7 @@ class MainViewModel @Inject constructor(
 
     companion object {
         private const val MIN_VALUE_SLIDER = 1
+        private const val MAX_VALUE_EXAM_MODE = "5"
     }
 
     override val _uiState = MutableStateFlow(MainUiState())
@@ -134,7 +135,7 @@ class MainViewModel @Inject constructor(
         if (currentTab.isFirst()) {
             SettingsExam.RandomTest(
                 countQuestion = countQuestion,
-                isExamMode = false
+                isExamMode = uiState.value.examMode == MainUiState.ExamMode.EXAM
             )
         } else {
             val startRange = uiState.value.startRange
@@ -248,6 +249,21 @@ class MainViewModel @Inject constructor(
         _uiState.update { state ->
             state.copy(
                 isRandomRange = isCheck
+            )
+        }
+    }
+
+    fun updateModeExam() {
+        _uiState.update { state ->
+            val examMode = if (state.examMode == MainUiState.ExamMode.WORKOUT)
+                MainUiState.ExamMode.EXAM
+            else MainUiState.ExamMode.WORKOUT
+            val visibleBtnMini = examMode == MainUiState.ExamMode.WORKOUT
+            val currentText = if (examMode == MainUiState.ExamMode.WORKOUT) "" else MAX_VALUE_EXAM_MODE
+            state.copy(
+                examMode = examMode,
+                visibleBtnMini = visibleBtnMini,
+                currentText = currentText
             )
         }
     }

@@ -6,7 +6,9 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.animation.AlphaAnimation
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.koen.gosexam.R
 import com.koen.gosexam.databinding.FragmentCountQuestionBinding
@@ -73,12 +75,24 @@ class CountQuestionFragment : BaseFragment<MainUiState, MainViewModel, FragmentC
             viewModel.onClickInfoTypeExam()
         }
 
+        binding.btnModeExam.setOnClickListener {
+            viewModel.updateModeExam()
+        }
+
         binding.etAmountQuestion.editText?.addTextChangedListener(textWatcher)
     }
 
     override fun onDestroyView() {
         binding.etAmountQuestion.editText?.removeTextChangedListener(textWatcher)
         super.onDestroyView()
+    }
+
+    private val alphaAnimationTrue = AlphaAnimation(0f, 1f).apply {
+        duration = 250
+    }
+
+    private val alphaAnimationFalse = AlphaAnimation(1f, 0f).apply {
+        duration = 250
     }
 
     override fun handleUiState(uiState: MainUiState) {
@@ -92,6 +106,25 @@ class CountQuestionFragment : BaseFragment<MainUiState, MainViewModel, FragmentC
         binding.etAmountQuestion.editText?.setSelection(text)
         binding.btnMax.text = uiState.examSize.toString()
         binding.tvInfoTest.text = uiState.textInfoTest
+        val modeExam = uiState.examMode == MainUiState.ExamMode.EXAM
+        binding.btnModeExam.check = modeExam
+        binding.etAmountQuestion.isEnabled = !modeExam
+        binding.containerMiniBtn.isVisible = uiState.visibleBtnMini
+        binding.tvInfoTime.isVisible = !uiState.visibleBtnMini
+        if (uiState.visibleBtnMini) {
+            alphaAnimationFalse
+        } else {
+            alphaAnimationTrue
+        }.let {
+            binding.tvInfoTime.startAnimation(it)
+        }
+        if (uiState.visibleBtnMini) {
+            alphaAnimationTrue
+        } else {
+            alphaAnimationFalse
+        }.let {
+            binding.containerMiniBtn.startAnimation(it)
+        }
     }
 
     override fun handleUiEvent(uiEvent: UiEvent) {

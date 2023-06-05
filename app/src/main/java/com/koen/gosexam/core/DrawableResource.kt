@@ -9,6 +9,8 @@ interface DrawableResource {
 
     val bgSolidError50: Int
 
+    val bgSolidPrimary30Cor4: Int
+
     fun getSelectedPrimary80ElseGray60(isSelected: Boolean): Int
 
     fun getSelectedIsTrueGreen50ElseGray60(isTrue: Boolean): Int
