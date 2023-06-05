@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary_100">#061D37</color>
-    <color name="primary_80">#002855</color>
-    <color name="primary_70">#00336D</color>
-    <color name="primary_60">#0F4686</color>
+    <color name="primary_100">#0F3F60</color>
+    <color name="primary_80">#01538A</color>
+    <color name="primary_70">#0A5A8F</color>
+    <color name="primary_60">#0E66A1</color>
     <color name="primary_50">#386393</color>
     <color name="primary_30">#B2C7E0</color>
     <color name="primary_20">#CDDEF3</color>
