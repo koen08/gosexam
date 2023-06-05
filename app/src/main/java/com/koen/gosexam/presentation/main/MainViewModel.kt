@@ -265,6 +265,7 @@ class MainViewModel @Inject constructor(
             else MainUiState.ExamMode.WORKOUT
             val visibleBtnMini = examMode == MainUiState.ExamMode.WORKOUT
             val currentText = if (examMode == MainUiState.ExamMode.WORKOUT) "" else MAX_VALUE_EXAM_MODE
+            sendEventShared(StartAnim(visibleBtnMini))
             state.copy(
                 examMode = examMode,
                 visibleBtnMini = visibleBtnMini,

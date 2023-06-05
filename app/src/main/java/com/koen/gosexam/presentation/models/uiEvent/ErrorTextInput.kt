@@ -10,3 +10,5 @@ data class ErrorTextInput(
 data class ErrorUiEvent(
     val errorText: String
 ) : UiEvent
+
+data class StartAnim(val visible: Boolean) : UiEvent

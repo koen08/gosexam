@@ -19,6 +19,7 @@ import com.koen.gosexam.presentation.exam.ExamTestFragment
 import com.koen.gosexam.presentation.models.base.UiEvent
 import com.koen.gosexam.presentation.models.uiEvent.ErrorTextInput
 import com.koen.gosexam.presentation.models.uiEvent.OpenExamTest
+import com.koen.gosexam.presentation.models.uiEvent.StartAnim
 import com.koen.gosexam.presentation.widget.SelectionButtonMini
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -111,20 +112,7 @@ class CountQuestionFragment : BaseFragment<MainUiState, MainViewModel, FragmentC
         binding.etAmountQuestion.isEnabled = !modeExam
         binding.containerMiniBtn.isVisible = uiState.visibleBtnMini
         binding.tvInfoTime.isVisible = !uiState.visibleBtnMini
-        if (uiState.visibleBtnMini) {
-            alphaAnimationFalse
-        } else {
-            alphaAnimationTrue
-        }.let {
-            binding.tvInfoTime.startAnimation(it)
-        }
-        if (uiState.visibleBtnMini) {
-            alphaAnimationTrue
-        } else {
-            alphaAnimationFalse
-        }.let {
-            binding.containerMiniBtn.startAnimation(it)
-        }
+
         binding.btnModeExam.text = uiState.btnExamText
     }
 
@@ -132,6 +120,22 @@ class CountQuestionFragment : BaseFragment<MainUiState, MainViewModel, FragmentC
         super.handleUiEvent(uiEvent)
         if (uiEvent is ErrorTextInput) {
             binding.etAmountQuestion.error = uiEvent.error
+        }
+        if (uiEvent is StartAnim) {
+            if (uiEvent.visible) {
+                alphaAnimationFalse
+            } else {
+                alphaAnimationTrue
+            }.let {
+                binding.tvInfoTime.startAnimation(it)
+            }
+            if (uiEvent.visible) {
+                alphaAnimationTrue
+            } else {
+                alphaAnimationFalse
+            }.let {
+                binding.containerMiniBtn.startAnimation(it)
+            }
         }
     }
 
