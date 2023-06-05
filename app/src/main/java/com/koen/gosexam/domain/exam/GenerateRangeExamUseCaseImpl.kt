@@ -12,8 +12,11 @@ class GenerateRangeExamUseCaseImpl @Inject constructor(
     private val stringResource: StringResource,
     private val drawableResource: DrawableResource
 ) : GenerateRangeExamUseCase {
-    override suspend fun invoke(minIndex: Int, maxIndex: Int): List<ExamUi> {
-        return examRepository.getExamByRange(minIndex, maxIndex)
-            .mapToExamTestPresentation(stringResource, drawableResource)
+    override suspend fun invoke(minIndex: Int, maxIndex: Int, isRandom: Boolean): List<ExamUi> {
+        return (if (isRandom) {
+            examRepository.getExamByRangeRandom(minIndex, maxIndex)
+        } else {
+            examRepository.getExamByRange(minIndex, maxIndex)
+        }).mapToExamTestPresentation(stringResource, drawableResource)
     }
 }

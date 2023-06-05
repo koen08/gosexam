@@ -132,7 +132,8 @@ class ExamViewModel @Inject constructor(
                 withContext(Dispatchers.IO) {
                     generateRangeExamUseCase(
                         minIndex = examSettings.startRange,
-                        maxIndex = examSettings.endRange
+                        maxIndex = examSettings.endRange,
+                        isRandom = examSettings.isRandomPosition
                     )
                 }.also {
                     updateExamUi(

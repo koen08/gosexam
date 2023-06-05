@@ -72,6 +72,10 @@ class ExamRepositoryImpl @Inject constructor(
         return examDao.generateTestByRange(min, max).mapToDomain()
     }
 
+    override suspend fun getExamByRangeRandom(min: Int, max: Int): List<Exam> {
+        return examDao.generateTestByRangeRandom(min, max).mapToDomain()
+    }
+
     override suspend fun saveTypeFaculty(typeFaculty: TypeFaculty) {
         sharedPrefString.save(typeFaculty.nameValue)
     }

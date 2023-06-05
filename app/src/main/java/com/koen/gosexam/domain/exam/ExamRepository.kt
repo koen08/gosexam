@@ -17,6 +17,8 @@ interface ExamRepository {
 
     suspend fun getExamByRange(min: Int, max: Int): List<Exam>
 
+    suspend fun getExamByRangeRandom(min: Int, max: Int) : List<Exam>
+
     suspend fun saveTypeFaculty(typeFaculty: TypeFaculty)
 
     suspend fun getTypeFaculty(): TypeFaculty

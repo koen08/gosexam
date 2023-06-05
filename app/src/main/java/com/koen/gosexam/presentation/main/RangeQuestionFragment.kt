@@ -100,16 +100,6 @@ class RangeQuestionFragment :
         }
     }
 
-    override fun handleUiState(uiState: MainUiState) {
-        super.handleUiState(uiState)
-        binding.run {
-            etStart.editText?.setText(uiState.startRange.toString())
-            etFinish.editText?.setText(uiState.endRange.toString())
-            etStart.editText?.setSelection(etStart.editText?.length().orZero)
-            etFinish.editText?.setSelection(etFinish.editText?.length().orZero)
-        }
-    }
-
     override fun handleUiEvent(uiEvent: UiEvent) {
         super.handleUiEvent(uiEvent)
         if (uiEvent is RangeSliderInit) {
