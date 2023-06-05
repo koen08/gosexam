@@ -75,7 +75,7 @@ class ExamTestFragment :
             }
         }
         mRewardedAd = RewardedAd(requireContext());
-        mRewardedAd?.setAdUnitId("R-M-2317669-2");
+        mRewardedAd?.setAdUnitId("R-M-2317669-1");
         val adRequest: AdRequest = AdRequest.Builder().build()
         //demo - demo-rewarded-yandex //release - R-M-2317669-1
         mRewardedAd?.setRewardedAdEventListener(object : RewardedAdEventListener {

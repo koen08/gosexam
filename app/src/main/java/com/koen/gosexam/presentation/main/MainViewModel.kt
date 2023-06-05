@@ -44,7 +44,7 @@ class MainViewModel @Inject constructor(
 
     companion object {
         private const val MIN_VALUE_SLIDER = 1
-        private const val MAX_VALUE_EXAM_MODE = "5"
+        private const val MAX_VALUE_EXAM_MODE = "60"
     }
 
     override val _uiState = MutableStateFlow(MainUiState())
@@ -225,6 +225,11 @@ class MainViewModel @Inject constructor(
             getExamUseCase().run {
                 sendEventShared(DismissLoading)
             }
+            _uiState.update { state ->
+                state.copy(
+                    btnExamText = stringResource.getBtnExamTest(true)
+                )
+            }
         }
     }
 
@@ -263,7 +268,8 @@ class MainViewModel @Inject constructor(
             state.copy(
                 examMode = examMode,
                 visibleBtnMini = visibleBtnMini,
-                currentText = currentText
+                currentText = currentText,
+                btnExamText = stringResource.getBtnExamTest(examMode == MainUiState.ExamMode.WORKOUT)
             )
         }
     }

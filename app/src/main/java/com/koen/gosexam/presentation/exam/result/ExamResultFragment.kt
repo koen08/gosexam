@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.koen.gosexam.R
@@ -58,6 +59,8 @@ class ExamResultFragment :
                 tvInfo.text = it.textDescriptionResult
                 adapterResult.items = it.examList
                 containerTitle.background = ContextCompat.getDrawable(requireContext(), it.backgroundTitle)
+                tvTimer.isVisible = uiState.examResultList.isExam
+                tvTimer.text = uiState.timerText
             }
         }
     }

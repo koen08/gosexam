@@ -8,7 +8,7 @@ import com.koen.gosexam.data.local.entity.ResultExamEntity
 import com.koen.gosexam.data.local.exams.ExamDao
 import com.koen.gosexam.data.local.exams.ResultsDao
 
-@Database(entities = [ExamEntity::class, ResultExamEntity::class], version = 2, exportSchema = false)
+@Database(entities = [ExamEntity::class, ResultExamEntity::class], version = 3, exportSchema = false)
 @TypeConverters(StringListConverts::class, ResultExamEntityConverter::class)
 abstract class AppDataBase : RoomDatabase() {
 

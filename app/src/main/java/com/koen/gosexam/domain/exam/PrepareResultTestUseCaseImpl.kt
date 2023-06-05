@@ -17,8 +17,9 @@ class PrepareResultTestUseCaseImpl @Inject constructor(
     private val drawableResource: DrawableResource,
     private val examRepository: ExamRepository,
 ) : PrepareResultTestUseCase {
-    override suspend fun invoke(examUiList: List<ExamUi>): Long {
-        val results = examUiList.mapToResult(stringResource, colorResource, styleResource, drawableResource)
+    override suspend fun invoke(examUiList: List<ExamUi>, currentTimer: Long, isExam: Boolean): Long {
+        val results =
+            examUiList.mapToResult(stringResource, colorResource, styleResource, drawableResource, currentTimer, isExam)
         return examRepository.saveResults(results.mapToEntity())
     }
 }

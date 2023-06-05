@@ -1,7 +1,9 @@
 package com.koen.gosexam.core
 
 import android.content.res.Resources
+import androidx.core.util.TimeUtils
 import com.koen.gosexam.R
+import java.util.concurrent.TimeUnit
 
 class StringResourceImpl(private val resource: Resources) : StringResource {
 
@@ -63,6 +65,28 @@ class StringResourceImpl(private val resource: Resources) : StringResource {
 
     override fun getLastTime(time: String): String {
         return resource.getString(R.string.examTest_lastTime, time)
+    }
+
+    override fun getTimeTimeSpent(time: Long): String {
+        val commonTime = 60_000 - time
+        var minutes = TimeUnit.MILLISECONDS.toMinutes(commonTime)
+        var seconds = TimeUnit.MILLISECONDS.toSeconds(time) - TimeUnit.MINUTES.toSeconds(minutes)
+        if (minutes <= 0 && seconds <= 0) {
+            minutes = 60
+            seconds = 0
+        }
+        val result = String.format("%d:%02d", minutes, seconds)
+        return resource.getString(R.string.examTest_spentTime, result)
+    }
+
+    override fun getBtnExamTest(isCheck: Boolean): String {
+        return if (isCheck) {
+            R.string.main_btnExamStart
+        } else {
+            R.string.main_btnExamEnd
+        }.let {
+            resource.getString(it)
+        }
     }
 
     override fun getResultCountAnswer(countAnswerTrue: Int, commonAnswerTrue: Int): String {

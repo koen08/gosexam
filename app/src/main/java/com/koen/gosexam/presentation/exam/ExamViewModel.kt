@@ -56,8 +56,11 @@ class ExamViewModel @Inject constructor(
     )
     override val uiState: StateFlow<ExamTestUiState> = _uiState.asStateFlow()
 
-    private val timer = object : CountDownTimer(10_000, 1_000) {
+    private var currentLastTime = 0L
+
+    private val timer = object : CountDownTimer(3600000, 1_000) {
         override fun onTick(millisUntilFinished: Long) {
+            currentLastTime = millisUntilFinished
             val minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)
             val seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(minutes)
             val result = String.format("%d:%02d", minutes, seconds)
@@ -117,6 +120,7 @@ class ExamViewModel @Inject constructor(
     fun updatePosition() {
         val uiState = uiState.value
         if (uiState.currentPosition + 1 >= uiState.examUiList.size) {
+            timer.cancel()
             sendEvent(ShowAds)
         } else {
             _uiState.update { state ->
@@ -143,9 +147,10 @@ class ExamViewModel @Inject constructor(
     fun prepareResult(examUiList: List<ExamUi> = uiState.value.examUiList) {
         viewModelScope.launch {
             val resultList = withContext(Dispatchers.IO) {
-                prepareResultTestUseCase(examUiList)
+                prepareResultTestUseCase(examUiList, currentLastTime, uiState.value.examMode.isExam())
             }
             sendEvent(OpenResultTest(resultList))
+            timer.cancel()
         }
     }
 

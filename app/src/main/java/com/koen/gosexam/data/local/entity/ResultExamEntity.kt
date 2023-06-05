@@ -16,5 +16,9 @@ data class ResultExamEntity(
     @ColumnInfo(name = "common_answer")
     val commonAnswer: Int = 0,
     @ColumnInfo(name = "exam_list")
-    val examList: List<ResultExamUi> = emptyList()
+    val examList: List<ResultExamUi> = emptyList(),
+    @ColumnInfo(name = "current_time")
+    val currentTimer: Long = 0,
+    @ColumnInfo(name = "is_exam")
+    val isExam: Boolean = false,
 )

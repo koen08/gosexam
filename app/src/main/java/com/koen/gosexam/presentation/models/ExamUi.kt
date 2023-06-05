@@ -21,7 +21,9 @@ fun List<ExamUi>.mapToResult(
     stringResource: StringResource,
     colorResource: ColorResource,
     styleResource: StyleResource,
-    drawableResource: DrawableResource
+    drawableResource: DrawableResource,
+    currentTimer: Long,
+    isExam: Boolean
 ): ResultTestUi {
     val countTrueAnswer =
         this.filter { it.answers.find { element -> element.selected && element.isTrue } != null }.size
@@ -32,7 +34,9 @@ fun List<ExamUi>.mapToResult(
         textDescriptionResult = stringResource.getResultCountAnswer(countTrueAnswer, this.size),
         commonAnswer = this.size,
         examList = this.map { it.mapToExamResultList(colorResource, styleResource) },
-        backgroundTitle = drawableResource.getSuccessOrFail(countTrueAnswer, this.size)
+        backgroundTitle = drawableResource.getSuccessOrFail(countTrueAnswer, this.size),
+        currentTimer = currentTimer,
+        isExam = isExam
     )
 }
 

@@ -30,4 +30,8 @@ interface StringResource {
     fun getTextInfoTest(size: String) : String
 
     fun getLastTime(time: String) : String
+
+    fun getTimeTimeSpent(time: Long) : String
+
+    fun getBtnExamTest(isCheck: Boolean) : String
 }

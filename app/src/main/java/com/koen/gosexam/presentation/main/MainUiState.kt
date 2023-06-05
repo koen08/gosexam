@@ -16,7 +16,8 @@ data class MainUiState(
     val endTextRange: String = "",
     val isRandomRange: Boolean = false,
     val examMode: ExamMode = ExamMode.WORKOUT,
-    val visibleBtnMini : Boolean = true
+    val visibleBtnMini : Boolean = true,
+    val btnExamText : String = ""
 ) : UiState {
     enum class ExamMode {
         WORKOUT, EXAM

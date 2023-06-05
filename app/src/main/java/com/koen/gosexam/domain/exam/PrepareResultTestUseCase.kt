@@ -6,6 +6,6 @@ import com.koen.gosexam.presentation.models.ResultTestUi
 
 interface PrepareResultTestUseCase {
     suspend operator fun invoke(
-        examUiList: List<ExamUi>
+        examUiList: List<ExamUi>, currentTimer: Long, isExam: Boolean
     ): Long
 }

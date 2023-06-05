@@ -125,6 +125,7 @@ class CountQuestionFragment : BaseFragment<MainUiState, MainViewModel, FragmentC
         }.let {
             binding.containerMiniBtn.startAnimation(it)
         }
+        binding.btnModeExam.text = uiState.btnExamText
     }
 
     override fun handleUiEvent(uiEvent: UiEvent) {

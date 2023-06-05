@@ -15,15 +15,18 @@ data class ResultTestUi(
     val textTitleResult: String = "",
     val textDescriptionResult: String = "",
     val examList: List<ResultExamUi> = emptyList(),
-    val backgroundTitle: Int = 0
+    val backgroundTitle: Int = 0,
+    val isExam: Boolean = false,
+    val currentTimer: Long = 0,
 )
-
 
 fun ResultTestUi.mapToEntity() = ResultExamEntity(
     countTrueAnswer = countTrueAnswer,
     isSuccess = isSuccess,
     commonAnswer = commonAnswer,
-    examList = examList
+    examList = examList,
+    currentTimer = currentTimer,
+    isExam = isExam
 )
 
 fun ResultExamEntity.mapToUi(
@@ -39,6 +42,8 @@ fun ResultExamEntity.mapToUi(
         textDescriptionResult = stringResource.getResultCountAnswer(countTrueAnswer, commonAnswer),
         commonAnswer = commonAnswer,
         examList = examList,
-        backgroundTitle = drawableResource.getSuccessOrFail(countTrueAnswer, commonAnswer)
+        backgroundTitle = drawableResource.getSuccessOrFail(countTrueAnswer, commonAnswer),
+        currentTimer = currentTimer,
+        isExam = isExam
     )
 }
